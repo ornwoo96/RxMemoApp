@@ -7,6 +7,7 @@ target 'FinalTest' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'Then'
+  pod 'Alamofire'
   # Pods for FinalTest
 
 end

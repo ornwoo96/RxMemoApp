@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B57B671277D575C00A8DFF1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57B670277D575C00A8DFF1 /* Result.swift */; };
+		0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */; };
 		0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904805277C562F0057AEE9 /* AppDelegate.swift */; };
 		0B904808277C562F0057AEE9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904807277C562F0057AEE9 /* SceneDelegate.swift */; };
 		0B904810277C562F0057AEE9 /* FinalTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B90480E277C562F0057AEE9 /* FinalTest.xcdatamodeld */; };
@@ -24,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		08D8D313EC1CBED5392DB48F /* Pods_FinalTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B57B670277D575C00A8DFF1 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		0B904802277C562F0057AEE9 /* FinalTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B904805277C562F0057AEE9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B904807277C562F0057AEE9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +58,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B57B66F277D574300A8DFF1 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				0B57B670277D575C00A8DFF1 /* Result.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		0B57B672277D605C00A8DFF1 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 		0B9047F9277C562F0057AEE9 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +171,8 @@
 		0B90483F277C938C0057AEE9 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0B57B672277D605C00A8DFF1 /* Repositories */,
+				0B57B66F277D574300A8DFF1 /* Entities */,
 				0B904848277C94550057AEE9 /* UseCases */,
 			);
 			path = Domain;
@@ -175,6 +196,7 @@
 		0B904848277C94550057AEE9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */,
 				0B90483D277C937D0057AEE9 /* MemoUseCase.swift */,
 			);
 			path = UseCases;
@@ -325,10 +347,12 @@
 				0B90483E277C937D0057AEE9 /* MemoUseCase.swift in Sources */,
 				0B904835277C92620057AEE9 /* MemoListCollectionViewCell.swift in Sources */,
 				0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */,
+				0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */,
 				0B904808277C562F0057AEE9 /* SceneDelegate.swift in Sources */,
 				0B904843277C93D60057AEE9 /* MemoListDIContainer.swift in Sources */,
 				0B90484B277C94820057AEE9 /* MemoListCoordinator.swift in Sources */,
 				0B904847277C94440057AEE9 /* MemoListViewModel.swift in Sources */,
+				0B57B671277D575C00A8DFF1 /* Result.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
