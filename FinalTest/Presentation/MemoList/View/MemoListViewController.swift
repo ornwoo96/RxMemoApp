@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxRelay
 import RxCocoa
 import Then
 
@@ -15,10 +16,14 @@ class MemoListViewController: UIViewController {
     var viewModel: MemoListViewModel!
     var disposeBag = DisposeBag()
     
-    var tempMemoData: [String] = [
-        "바보", "바보", "바보", "바보","바보", "바보","바보", "바보","바보", "바보","바보", "바보",
-        "바보", "바보", "바보", "바보","바보", "바보","바보", "바보","바보", "바보","바보", "바보"
-    ]
+    // BehaviorRelay로 ResultViewModel을 생성해놓고
+    private let resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
+    
+    // Observable로 위에 생성해놓은 BehaviorRelay<[ResultViewModel]> 타입의 배열에 데이터가 바뀔떄마다
+    // 감시하다가 Subscriber에게 알려줌!
+    var resultViewModelObserver: Observable<[ResultViewModel]> {
+        return resultViewModel.asObservable()
+    }
     
     var memoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -26,7 +31,6 @@ class MemoListViewController: UIViewController {
         layout.itemSize = CGSize(width: UIScreen.main.bounds.maxX,
                                  height: UIScreen.main.bounds.maxX/7)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
         return collectionView
     }()
     
@@ -51,6 +55,8 @@ class MemoListViewController: UIViewController {
         view.backgroundColor = .white
         setupViews()
         self.bind(viewModel: self.viewModel)
+        feachResult()
+        subscribe()
     }
     
     private func bind(viewModel: MemoListViewModel) {
@@ -77,9 +83,9 @@ class MemoListViewController: UIViewController {
     func configureMemoCollectionView() {
         view.addSubview(memoCollectionView)
         memoCollectionView.do {
-            $0.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: "MemoListCollectionViewCell")
             $0.dataSource = self
             $0.delegate = self
+            $0.register(MemoListCollectionViewCell.self, forCellWithReuseIdentifier: "MemoListCollectionViewCell")
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -87,6 +93,27 @@ class MemoListViewController: UIViewController {
             $0.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             $0.backgroundColor = .white
         }
+    }
+    
+    func feachResult() {
+        viewModel
+            .fetchResult()
+            .subscribe(onNext: { resultViewModels in
+                // resultViewModel에 담기
+                self.resultViewModel.accept(resultViewModels)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func subscribe() {
+        // resultViewModel에 데이터가 바뀔때마다 reloadData!
+        self.resultViewModelObserver
+            .subscribe(onNext: { results in
+                DispatchQueue.main.async {
+                    self.memoCollectionView.reloadData()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -96,16 +123,21 @@ extension MemoListViewController {
     }
 }
 
+extension MemoListViewController: UICollectionViewDelegate {
+    
+}
+
 extension MemoListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return tempMemoData.count
+        return self.resultViewModel.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = memoCollectionView.dequeueReusableCell(withReuseIdentifier: "MemoListCollectionViewCell", for: indexPath) as! MemoListCollectionViewCell
         
-        cell.titleLabel.text = tempMemoData[indexPath.item]
-        cell.contentLabel.text = tempMemoData[indexPath.item]
+        let resultViewModel = self.resultViewModel.value[indexPath.row]
+        
+        cell.viewModel.onNext(resultViewModel)
         
         return cell
     }

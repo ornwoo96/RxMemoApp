@@ -6,32 +6,19 @@
 //
 
 import Foundation
+import RxSwift
 
-//struct MemoListViewModelActions {
-//}
-//
-//protocol MemoListViewModelInput {
-//    func viewDidLoad()
-//}
-//
-//protocol MemoListViewModelOutput {
-//
-//
-//}
-//
-//protocol MemoListViewModelProtocol: MemoListViewModelInput, MemoListViewModelOutput {}
-//
 class MemoListViewModel {
-//
-//    let memos: Observable<[Memo]>
-//
-    private let memoUseCase: MemoUseCase
-//
-    init(memoUseCase: MemoUseCase) {
-        self.memoUseCase = memoUseCase
+    
+    private let resultUseCase: ResultUseCaseProtocol // 확장성을 고려하기위해
+    
+    init(resultUseCase: ResultUseCaseProtocol) {
+        self.resultUseCase = resultUseCase
     }
     
-//    func viewDidLoad() {
-//        <#code#>
-//    }
+    func fetchResult() -> Observable<[ResultViewModel]> {
+        // 이해가 안됨 map안에 map?? 근데 들어간다고? // repository에 들어가야될 내용인건가?
+        resultUseCase.fetchResult().map { $0.map { ResultViewModel(result: $0) } }
+    }
+    
 }

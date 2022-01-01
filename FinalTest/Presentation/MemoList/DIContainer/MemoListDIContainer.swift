@@ -14,10 +14,10 @@ class MemoListDIContainer {
     }
     
     func makeMemoListViewModel() -> MemoListViewModel {
-        return MemoListViewModel(memoUseCase: makeMemoUseCase())
+        return MemoListViewModel(resultUseCase: makeResultUseCase())
     }
     
-    func makeMemoUseCase() -> MemoUseCase {
-        return MemoUseCase()
+    func makeResultUseCase() -> ResultUseCaseProtocol {
+        return ResultUseCase()
     }
 }

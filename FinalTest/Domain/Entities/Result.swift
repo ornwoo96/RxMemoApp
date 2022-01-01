@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct ResultName: Codable {
+    var apiNum: ResultResponse
+    
+    private enum CodingKeys: String, CodingKey {
+        case apiNum = "I2790"
+    }
+}
+
 struct ResultResponse: Codable {
     var totalCount: String?
     var row: [Result]
@@ -69,7 +77,7 @@ struct Result: Codable {
 
 // 786707ec222c40daa0a7 -> 인증키
 
-// http://openapi.foodsafetykorea.go.kr/api/786707ec222c40daa0a7/I2790/json/1/5/DESC_KOR=김치
+// https://openapi.foodsafetykorea.go.kr/api/786707ec222c40daa0a7/I2790/json/1/5/DESC_KOR=김치
 
 
 //{"I2790":
