@@ -15,7 +15,7 @@ class MemoListCoordinator: Coordinator {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    //
+    
     func start() {
         let memoListDIContainer = MemoListDIContainer()
         let viewController = memoListDIContainer.makeMemoListViewController()

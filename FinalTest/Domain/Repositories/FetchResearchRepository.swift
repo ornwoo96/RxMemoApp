@@ -27,14 +27,13 @@ class FetchResearchRepository {
             .responseJSON{ response in
                 switch response.result {
                 case .success(let json):
-                    print(json)
                     do {
                         let dataJson = try JSONSerialization.data(withJSONObject: json,
                                                                   options: .prettyPrinted)
-                        let jsonInstanceData = try JSONDecoder().decode(ResultName.self, from: dataJson)
-                        
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let jsonInstanceData = try decoder.decode(ResultName.self, from: dataJson)
                         self.resultData = jsonInstanceData.apiNum.row
-                        
                         return completion(nil, jsonInstanceData.apiNum.row)
                     } catch {
                         print(error)

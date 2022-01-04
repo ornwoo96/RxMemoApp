@@ -103,15 +103,15 @@ class MemoDetailViewController: UIViewController {
     }
     
     func bind() {
-        guard let foodName = viewModel?.result.foodName,
-              let regionName = viewModel?.result.regionName,
-              let calorie = viewModel?.result.calorie,
-              let carbohydrate = viewModel?.result.carbohydrate,
-              let protein = viewModel?.result.protein,
-              let fat = viewModel?.result.fat,
-              let sugar = viewModel?.result.sugar,
-              let sodium = viewModel?.result.sodium,
-              let cholesterol = viewModel?.result.cholesterol else { return }
+        guard let foodName = viewModel?.result.descKor,
+              let regionName = viewModel?.result.samplingRegionName,
+              let calorie = viewModel?.result.nutrCont1,
+              let carbohydrate = viewModel?.result.nutrCont2,
+              let protein = viewModel?.result.nutrCont3,
+              let fat = viewModel?.result.nutrCont4,
+              let sugar = viewModel?.result.nutrCont5,
+              let sodium = viewModel?.result.nutrCont6,
+              let cholesterol = viewModel?.result.nutrCont7 else { return }
         foodNameLabel.text = foodName
         regionNameLabel.text = "지역명 : " + regionName
         calorieLabel.text = "칼로리 : " + calorie

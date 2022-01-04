@@ -11,11 +11,11 @@ struct ResultViewModel {
     private let result: Result
     
     var foodName: String? {
-        return result.foodName
+        return result.descKor
     }
     
     var sugar: String? {
-        return result.sugar
+        return result.nutrCont5
     }
     
     init(result: Result) {
