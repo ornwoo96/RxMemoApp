@@ -12,18 +12,9 @@ import RxCocoa
 import Then
 
 class MemoListViewController: UIViewController {
-    weak var coordinator: MemoListCoordinator?
+    var coordinator: MemoListCoordinator?
     var viewModel: MemoListViewModel!
     var disposeBag = DisposeBag()
-    
-    // BehaviorRelay로 ResultViewModel을 생성해놓고
-    private let resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
-    
-    // Observable로 위에 생성해놓은 BehaviorRelay<[ResultViewModel]> 타입의 배열에 데이터가 바뀔떄마다
-    // 감시하다가 Subscriber에게 알려줌!
-    var resultViewModelObserver: Observable<[ResultViewModel]> {
-        return resultViewModel.asObservable()
-    }
     
     var memoCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -51,12 +42,16 @@ class MemoListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        coordinator?.childDidFinish()
         view.backgroundColor = .white
         setupViews()
         self.bind(viewModel: self.viewModel)
         feachResult()
         subscribe()
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+//        coordinator?.childDidFinish()
     }
     
     private func bind(viewModel: MemoListViewModel) {
@@ -98,19 +93,19 @@ class MemoListViewController: UIViewController {
     func feachResult() {
         viewModel
             .fetchResult()
-            .subscribe(onNext: { resultViewModels in
+            .subscribe(onNext: { [weak self] resultViewModels in
                 // resultViewModel에 담기
-                self.resultViewModel.accept(resultViewModels)
+                self?.viewModel.resultViewModel.accept(resultViewModels)
             })
             .disposed(by: disposeBag)
     }
     
     func subscribe() {
         // resultViewModel에 데이터가 바뀔때마다 reloadData!
-        self.resultViewModelObserver
-            .subscribe(onNext: { results in
+        self.viewModel.resultViewModelObserver
+            .subscribe(onNext: { [weak self] results in
                 DispatchQueue.main.async {
-                    self.memoCollectionView.reloadData()
+                    self?.memoCollectionView.reloadData()
                 }
             })
             .disposed(by: disposeBag)
@@ -129,13 +124,13 @@ extension MemoListViewController: UICollectionViewDelegate {
 
 extension MemoListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.resultViewModel.value.count
+        return viewModel.resultViewModel.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = memoCollectionView.dequeueReusableCell(withReuseIdentifier: "MemoListCollectionViewCell", for: indexPath) as! MemoListCollectionViewCell
         
-        let resultViewModel = self.resultViewModel.value[indexPath.row]
+        let resultViewModel = viewModel.resultViewModel.value[indexPath.row]
         
         cell.viewModel.onNext(resultViewModel)
         
@@ -143,10 +138,85 @@ extension MemoListViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        <#code#>
+//        let result = self.resultViewModel[indexPath.row]
+//        coordinator?.showMemoDetailView(resultData: result)
+        print("didSelected")
+        coordinator?.showMemoDetailView(resultData: viewModel.fetchResultData()[indexPath.row])
     }
 }
 
 extension MemoListViewController: UICollectionViewDelegateFlowLayout {
     
 }
+
+
+
+//// MARK: 뷰모델1의 특정 메소드를 뷰모델2에서 실행할 수 있게
+//
+//class ParentCoordinator {
+//    func start() {
+//        let viewModel = ParentViewModel()
+//
+//        let view2Coordinator = ChildCoordinator(parentFunc: viewModel.parentFunc)
+//
+//        let view2ViewController = view2Coordinator.makeView2Controller()
+//
+//        ParentViewController(view2Controller: view2ViewController, viewModel: viewModel)
+//    }
+//}
+//
+//class ParentViewController {
+//    var viewModel: ParentViewModel
+//
+//    var view2Controller: ChildViewController
+//
+//    init(view2Controller: ChildViewController, viewModel: ParentViewModel) {
+//        self.viewModel = viewModel
+//        self.view2Controller = view2Controller
+//    }
+//}
+//
+//class ParentViewModel {
+//    func parentFunc() {
+//        print("목표 메소드")
+//    }
+//}
+//
+//
+////----------------------------------------
+//
+//
+//class ChildCoordinator {
+//    var parentFunc: () -> Void
+//
+//    init(parentFunc: @escaping () -> Void) {
+//        self.parentFunc = parentFunc
+//    }
+//
+//    func makeView2Controller() -> ChildViewController {
+//        let viewModel = ChildViewModel(parentFunc: parentFunc)
+//
+//        return ChildViewController(viewModel: viewModel)
+//    }
+//}
+//
+//class ChildViewController {
+//    var viewModel: ChildViewModel
+//
+//    init(viewModel: ChildViewModel) {
+//        self.viewModel = viewModel
+//    }
+//}
+//
+//class ChildViewModel {
+//
+//    var parentFunc: () -> Void
+//
+//    init(parentFunc: @escaping () -> Void) {
+//        self.parentFunc = parentFunc
+//    }
+//
+//    func specificTiming() {
+//        parentFunc() // == 부모뷰모델.parentFunc
+//    }
+//}

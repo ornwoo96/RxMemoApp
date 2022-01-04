@@ -12,6 +12,8 @@ protocol Coordinator: AnyObject {
     var navigationController: UINavigationController { get set }
     
     func start()
+    
+    func childDidFinish(_ child: Coordinator?)
 }
 
 class MainCoordinator: Coordinator {
@@ -27,6 +29,7 @@ class MainCoordinator: Coordinator {
         memoListCoordinator.start()
     }
     
+    // MARK: 이건 삭제~
     func childDidFinish(_ child: Coordinator?){
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {

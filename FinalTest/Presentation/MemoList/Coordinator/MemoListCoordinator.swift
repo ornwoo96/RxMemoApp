@@ -8,7 +8,7 @@
 import UIKit
 
 class MemoListCoordinator: Coordinator {
-    weak var parentsCoordinator: MainCoordinator?
+    weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
@@ -23,12 +23,17 @@ class MemoListCoordinator: Coordinator {
         self.navigationController.pushViewController(viewController, animated: false)
     }
     
-    func childDidFinish() {
-        parentsCoordinator?.childDidFinish(self)
+    func childDidFinish(_ child: Coordinator?) {
+        for (index, coordinator) in childCoordinators.enumerated() {
+            if coordinator === child {
+                childCoordinators.remove(at: index)
+                break
+            }
+        }
     }
     
-//    func showMemoDetailView() {
-//        let memoDetailCoordinator = MemoDetailCoordinator(navigationController: navigationController)
-//        memoDetailCoordinator.start()
-//    }
+    func showMemoDetailView(resultData: Result) {
+        let memoDetailCoordinator = MemoDetailCoordinator(result: resultData, navigationController: navigationController)
+        memoDetailCoordinator.start()
+    }
 }

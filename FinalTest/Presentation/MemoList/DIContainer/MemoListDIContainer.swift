@@ -18,6 +18,10 @@ class MemoListDIContainer {
     }
     
     func makeResultUseCase() -> ResultUseCaseProtocol {
-        return ResultUseCase()
+        return ResultUseCase(repository: makeFetchResearchRepository())
+    }
+    
+    func makeFetchResearchRepository() -> FetchResearchRepository {
+        return FetchResearchRepository()
     }
 }

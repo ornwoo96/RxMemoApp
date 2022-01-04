@@ -7,6 +7,11 @@
 
 import Foundation
 
-class MemoUseCase {
+protocol MemoUseCaseProtocol: AnyObject {
+    
+}
+
+class MemoUseCase: MemoUseCaseProtocol {
+    
     
 }

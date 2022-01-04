@@ -7,10 +7,20 @@
 
 import Foundation
 import RxSwift
+import RxRelay
 
 class MemoListViewModel {
+    let resultUseCase: ResultUseCaseProtocol // 확장성을 고려하기위해
+    // BehaviorRelay로 ResultViewModel을 생성해놓고
+    var resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
     
-    private let resultUseCase: ResultUseCaseProtocol // 확장성을 고려하기위해
+    // Observable로 위에 생성해놓은 BehaviorRelay<[ResultViewModel]> 타입의 배열에 데이터가 바뀔떄마다
+    // 감시하다가 Subscriber에게 알려줌!
+    var resultViewModelObserver: Observable<[ResultViewModel]> {
+        return resultViewModel.asObservable()
+    }
+    
+    var resultData = PublishSubject<[Result]>()
     
     init(resultUseCase: ResultUseCaseProtocol) {
         self.resultUseCase = resultUseCase
@@ -21,4 +31,7 @@ class MemoListViewModel {
         resultUseCase.fetchResult().map { $0.map { ResultViewModel(result: $0) } }
     }
     
+    func fetchResultData() -> [Result] {
+        return resultUseCase.resultData
+    }
 }

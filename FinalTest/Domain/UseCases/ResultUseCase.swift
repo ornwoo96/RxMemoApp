@@ -11,18 +11,29 @@ import RxSwift
 
 protocol ResultUseCaseProtocol {
     func fetchResult() -> Observable<[Result]>
+    var resultData: [Result] { get }
+    
+    var repository: FetchResearchRepository? { get set }
 }
 
 class ResultUseCase: ResultUseCaseProtocol {
     
+    var repository: FetchResearchRepository?
+    var resultData: [Result] = []
+    
+    init(repository: FetchResearchRepository) {
+        self.repository = repository
+    }
+    
     func fetchResult() -> Observable<[Result]> {
         return Observable.create { (observer) -> Disposable in
-            self.fetchResultData { (error, row) in
+            self.repository?.fetchResultData { (error, row) in
                 if let error = error {
                     observer.onError(error)
                 }
                 if let row = row {
                     observer.onNext(row)
+                    self.resultData = row
                 }
                 observer.onCompleted()
             }
@@ -30,57 +41,10 @@ class ResultUseCase: ResultUseCaseProtocol {
         }
     }
     
-    private func fetchResultData(completion: @escaping ((Error?, [Result]?) -> Void)) {
-        let urlString = "https://openapi.foodsafetykorea.go.kr/api/786707ec222c40daa0a7/I2790/json"
-//        let urlString = "https://openapi.foodsafetykorea.go.kr/api/786707ec222c40daa0a7/I2790/json/1/5/DESC_KOR=김치"
-        let parameters: Parameters = [
-            "startIdx" : 1,
-            "endIdx" : 5,
-            "DESC_KOR" : "김치"
-        ]
-//    https://openapi.foodsafetykorea.go.kr/api/786707ec222c40daa0a7/I2790/json/1/5/DESC_KOR=김치
-        guard var url = URL(string: urlString) else { return completion(NSError(domain: "dongou705",
-                                                                                code: 404,
-                                                                                userInfo: nil), nil)}
-        url.appendPathComponent("/1/5/DESC_KOR=김치")
-//        AF.request(url,
-//                   method: HTTPMethod.get,
-//                   parameters: parameters,
-//                   encoding: JSONEncoding.default,
-//                   headers: nil,
-//                   interceptor: nil,
-//                   requestModifier: nil)
-//            .responseDecodable(of: ResultName.self) { response in
-//                switch response.result {
-//                case.success(let data):
-//                    return completion(nil, data.apiNum.row)
+//    func resultData(completion: @escaping (([Result]?) -> Void))  {
+//        repository?.embeddedResultData { result in
 //
-//                case.failure(let error):
-//                    return completion(error, nil) // 왜 에러뜨징?
-//                }
-//            }
-//
-        AF.request(url,
-                   method: HTTPMethod.get,
-                   headers: nil,
-                   interceptor: nil,
-                   requestModifier: nil)
-            .responseJSON{ response in
-                switch response.result {
-                case .success(let json):
-                    print(json)
-                    do {
-                        let dataJson = try JSONSerialization.data(withJSONObject: json,
-                                                                  options: .prettyPrinted)
-                        let jsonInstanceData = try JSONDecoder().decode(ResultName.self, from: dataJson)
-                        return completion(nil, jsonInstanceData.apiNum.row)
-                    } catch {
-                        print(error)
-                    }
-//                    return completion(nil, json)
-                case .failure(let error):
-                    return completion(error, nil)
-                }
-            }
-    }
+//        }
+//    }
+    
 }
