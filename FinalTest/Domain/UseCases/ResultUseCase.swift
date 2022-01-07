@@ -10,14 +10,13 @@ import Alamofire
 import RxSwift
 
 protocol ResultUseCaseProtocol {
-    func fetchResult() -> Observable<[Result]>
     var resultData: [Result] { get }
-    
     var repository: FetchResearchRepository? { get set }
+    
+    func fetchResult(query: String, completion: @escaping (([Result]) -> Void)) -> Observable<[Result]>
 }
 
 class ResultUseCase: ResultUseCaseProtocol {
-    
     var repository: FetchResearchRepository?
     var resultData: [Result] = []
     
@@ -25,26 +24,21 @@ class ResultUseCase: ResultUseCaseProtocol {
         self.repository = repository
     }
     
-    func fetchResult() -> Observable<[Result]> {
+    func fetchResult(query: String, completion: @escaping (([Result]) -> Void)) -> Observable<[Result]> {
         return Observable.create { (observer) -> Disposable in
-            self.repository?.fetchResultData { (error, row) in
+            self.repository?.fetchResultData(query: query) { (error, row) in
                 if let error = error {
                     observer.onError(error)
                 }
                 if let row = row {
-                    observer.onNext(row)
                     self.resultData = row
+                    observer.onNext(row)
+                    
+                    return completion(self.resultData)
                 }
                 observer.onCompleted()
             }
             return Disposables.create()
         }
     }
-    
-//    func resultData(completion: @escaping (([Result]?) -> Void))  {
-//        repository?.embeddedResultData { result in
-//
-//        }
-//    }
-    
 }

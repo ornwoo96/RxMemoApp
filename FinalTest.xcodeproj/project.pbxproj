@@ -21,7 +21,7 @@
 		0B904812277C56310057AEE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B904811277C56310057AEE9 /* Assets.xcassets */; };
 		0B904815277C56310057AEE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B904813277C56310057AEE9 /* LaunchScreen.storyboard */; };
 		0B90482B277C91D40057AEE9 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B90482A277C91D40057AEE9 /* MainCoordinator.swift */; };
-		0B904835277C92620057AEE9 /* MemoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904834277C92620057AEE9 /* MemoListCollectionViewCell.swift */; };
+		0B904835277C92620057AEE9 /* MemoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904834277C92620057AEE9 /* MemoListTableViewCell.swift */; };
 		0B90483E277C937D0057AEE9 /* MemoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B90483D277C937D0057AEE9 /* MemoUseCase.swift */; };
 		0B904843277C93D60057AEE9 /* MemoListDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904842277C93D60057AEE9 /* MemoListDIContainer.swift */; };
 		0B904845277C940A0057AEE9 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904844277C940A0057AEE9 /* MemoListViewController.swift */; };
@@ -48,7 +48,7 @@
 		0B904814277C56310057AEE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B904816277C56310057AEE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B90482A277C91D40057AEE9 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
-		0B904834277C92620057AEE9 /* MemoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCollectionViewCell.swift; sourceTree = "<group>"; };
+		0B904834277C92620057AEE9 /* MemoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewCell.swift; sourceTree = "<group>"; };
 		0B90483D277C937D0057AEE9 /* MemoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoUseCase.swift; sourceTree = "<group>"; };
 		0B904842277C93D60057AEE9 /* MemoListDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListDIContainer.swift; sourceTree = "<group>"; };
 		0B904844277C940A0057AEE9 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +70,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B3B11D4278478E000CD1C28 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		0B57B66F277D574300A8DFF1 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,6 +182,7 @@
 		0B904829277C91C40057AEE9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0B3B11D4278478E000CD1C28 /* Search */,
 				0B90482D277C920D0057AEE9 /* MemoList */,
 				0B57B6772780509E00A8DFF1 /* MemoDetail */,
 			);
@@ -196,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				0B904844277C940A0057AEE9 /* MemoListViewController.swift */,
-				0B904834277C92620057AEE9 /* MemoListCollectionViewCell.swift */,
+				0B904834277C92620057AEE9 /* MemoListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -404,7 +412,7 @@
 				0B904810277C562F0057AEE9 /* FinalTest.xcdatamodeld in Sources */,
 				0B90482B277C91D40057AEE9 /* MainCoordinator.swift in Sources */,
 				0B90483E277C937D0057AEE9 /* MemoUseCase.swift in Sources */,
-				0B904835277C92620057AEE9 /* MemoListCollectionViewCell.swift in Sources */,
+				0B904835277C92620057AEE9 /* MemoListTableViewCell.swift in Sources */,
 				0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */,
 				0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */,
 				0B57B681278050F100A8DFF1 /* MemoDetailDIContainer.swift in Sources */,

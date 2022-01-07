@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-class MemoDetailViewController: UIViewController {
+protocol viewControllerProtocol: AnyObject {
+    
+}
+
+class MemoDetailViewController: UIViewController, viewControllerProtocol {
     var viewModel: MemoDetailViewModel?
     weak var coordinator: MemoDetailCoordinator?
     
@@ -84,6 +88,17 @@ class MemoDetailViewController: UIViewController {
         return label
     }()
     
+    lazy var removeButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.text = "코디네이터 삭제"
+        button.backgroundColor = .blue
+        button.addTarget(self,
+                         action: #selector(removeButtonDidTap(sender:)),
+                         for: .touchUpInside)
+        
+        return button
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -126,7 +141,8 @@ class MemoDetailViewController: UIViewController {
     func setupViews() {
         [ foodNameLabel, regionNameLabel, calorieLabel,
         carbohydrateLabel, proteinLabel, fatLabel,
-          sugarLabel, sodiumLabel, cholesterolLabel ].forEach() { view.addSubview($0) }
+          sugarLabel, sodiumLabel, cholesterolLabel,
+          removeButton ].forEach() { view.addSubview($0) }
         
         foodNameLabel.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -173,6 +189,19 @@ class MemoDetailViewController: UIViewController {
             $0.topAnchor.constraint(equalTo: sodiumLabel.bottomAnchor, constant: 10).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35).isActive = true
         }
+        removeButton.do {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.topAnchor.constraint(equalTo: cholesterolLabel.bottomAnchor, constant: 50).isActive = true
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            $0.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        }
+    }
+    
+    @objc func removeButtonDidTap(sender: UIButton) {
+        
+        coordinator?.removeAllCoordinator()
+        print("코디네이터들 다 삭제")
     }
     
     

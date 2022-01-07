@@ -7,14 +7,30 @@
 
 import Foundation
 
-class MemoDetailViewModel {
+protocol MemoDetailViewModelInput {
     
+}
+
+protocol MemoDetailViewModelOuput {
+    var result: Result { get }
+}
+
+protocol MemoDetailViewModelProtocol: MemoDetailViewModelInput, MemoDetailViewModelOuput {}
+
+class MemoDetailViewModel: MemoDetailViewModelProtocol {
     private let memoUseCase: MemoUseCaseProtocol
+    
+    // MARK: Output
     var result = Result()
     
     init(result: Result, memoUseCase: MemoUseCaseProtocol) {
         self.memoUseCase = memoUseCase
         self.result = result
     }
+    
+}
+
+// MARK: Input - View Methods
+extension MemoDetailViewModel {
     
 }

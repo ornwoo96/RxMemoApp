@@ -9,29 +9,61 @@ import Foundation
 import RxSwift
 import RxRelay
 
-class MemoListViewModel {
-    let resultUseCase: ResultUseCaseProtocol // 확장성을 고려하기위해
-    // BehaviorRelay로 ResultViewModel을 생성해놓고
-    var resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
+struct MemoListViewModelActions {
+    let showMemoDetailView: (Result) -> Void
+}
+
+protocol MemoListViewModelInput {
+    func fetchResult(query: String)
+}
+
+protocol MemoListViewModelOuput {
+    var resultViewModel: BehaviorRelay<[ResultViewModel]> { get }
+    var resultViewModelObserver: Observable<[ResultViewModel]> { get }
+    var result: [Result] { get }
+}
+
+protocol MemoListViewModelProtocol: MemoListViewModelInput, MemoListViewModelOuput {}
+
+class MemoListViewModel: MemoListViewModelProtocol {
+    private let resultUseCase: ResultUseCaseProtocol
+    private let actions: MemoListViewModelActions?
     
-    // Observable로 위에 생성해놓은 BehaviorRelay<[ResultViewModel]> 타입의 배열에 데이터가 바뀔떄마다
-    // 감시하다가 Subscriber에게 알려줌!
+    // MARK: Ouput
+    var resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
     var resultViewModelObserver: Observable<[ResultViewModel]> {
         return resultViewModel.asObservable()
     }
+    var result: [Result] = []
+    var disposeBag = DisposeBag()
     
-    var resultData = PublishSubject<[Result]>()
     
-    init(resultUseCase: ResultUseCaseProtocol) {
+    init(resultUseCase: ResultUseCaseProtocol,
+         actions: MemoListViewModelActions) {
         self.resultUseCase = resultUseCase
+        self.actions = actions
     }
     
-    func fetchResult() -> Observable<[ResultViewModel]> {
-        // 이해가 안됨 map안에 map?? 근데 들어간다고? // repository에 들어가야될 내용인건가?
-        resultUseCase.fetchResult().map { $0.map { ResultViewModel(result: $0) } }
+    func fetchResult(query: String) {
+        resultUseCase.fetchResult(query: query) { [weak self] data in
+            self?.result = data
+        }
+        .map { $0.map { ResultViewModel(result: $0) } }
+        .subscribe(onNext: { [weak self] result in
+            self?.resultViewModel.accept(result)
+        })
+        .disposed(by: disposeBag)
+    }
+}
+
+
+    // MARK: Input - View Methods
+extension MemoListViewModel {
+    
+    func viewDidLoad() {}
+    
+    func showMemoDetailView(result: Result) {
+        actions?.showMemoDetailView(result)
     }
     
-    func fetchResultData() -> [Result] {
-        return resultUseCase.resultData
-    }
 }

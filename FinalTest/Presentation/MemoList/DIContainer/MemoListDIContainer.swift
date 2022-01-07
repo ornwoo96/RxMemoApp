@@ -9,12 +9,12 @@ import Foundation
 
 class MemoListDIContainer {
     
-    func makeMemoListViewController() -> MemoListViewController {
-        return MemoListViewController.create(with: makeMemoListViewModel())
+    func makeMemoListViewController(actions: MemoListViewModelActions) -> MemoListViewController {
+        return MemoListViewController.create(with: makeMemoListViewModel(actions: actions))
     }
     
-    func makeMemoListViewModel() -> MemoListViewModel {
-        return MemoListViewModel(resultUseCase: makeResultUseCase())
+    func makeMemoListViewModel(actions: MemoListViewModelActions) -> MemoListViewModel {
+        return MemoListViewModel(resultUseCase: makeResultUseCase(), actions: actions)
     }
     
     func makeResultUseCase() -> ResultUseCaseProtocol {

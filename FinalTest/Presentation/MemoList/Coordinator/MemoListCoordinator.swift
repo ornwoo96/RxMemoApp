@@ -8,6 +8,8 @@
 import UIKit
 
 class MemoListCoordinator: Coordinator {
+    var viewController: viewControllerProtocol?
+    
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
@@ -18,8 +20,11 @@ class MemoListCoordinator: Coordinator {
     
     func start() {
         let memoListDIContainer = MemoListDIContainer()
-        let viewController = memoListDIContainer.makeMemoListViewController()
+        let actions = MemoListViewModelActions(showMemoDetailView: showMemoDetailView)
+        let viewController = memoListDIContainer.makeMemoListViewController(actions: actions)
         viewController.coordinator = self
+        parentsCoordinator?.viewController = viewController
+        parentsCoordinator?.childCoordinators.append(self)
         self.navigationController.pushViewController(viewController, animated: false)
     }
     
@@ -34,6 +39,8 @@ class MemoListCoordinator: Coordinator {
     
     func showMemoDetailView(resultData: Result) {
         let memoDetailCoordinator = MemoDetailCoordinator(result: resultData, navigationController: navigationController)
+        memoDetailCoordinator.parentsCoordinator = self
+        self.childCoordinators.append(memoDetailCoordinator)
         memoDetailCoordinator.start()
     }
 }

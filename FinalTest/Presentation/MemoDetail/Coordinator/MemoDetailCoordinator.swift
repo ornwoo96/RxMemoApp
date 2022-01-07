@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 class MemoDetailCoordinator: Coordinator {
-    weak var parentsCoordinator: MainCoordinator?
+    var viewController: viewControllerProtocol?
+    
+    weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var result: Result
     var navigationController: UINavigationController
@@ -23,6 +25,7 @@ class MemoDetailCoordinator: Coordinator {
         let memoDetailDIContainer = MemoDetailDIContainer()
         let viewController = memoDetailDIContainer.makeMemoDetailViewController(result: result)
         viewController.coordinator = self
+        parentsCoordinator?.viewController = viewController
         self.navigationController.pushViewController(viewController, animated: true)
     }
     
@@ -39,4 +42,11 @@ class MemoDetailCoordinator: Coordinator {
         }
     }
     
+    // MARK: 차차 고칠 예정
+    func removeAllCoordinator() {
+//        let rootCoordinator = parentsCoordinator?.parentsCoordinator
+//        let memoListCoordinator = parentsCoordinator
+//        parentsCoordinator?.parentsCoordinator?.childDidFinish(parentsCoordinator)
+//        rootCoordinator?.viewControllerr
+    }
 }

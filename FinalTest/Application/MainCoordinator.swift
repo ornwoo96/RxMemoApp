@@ -9,16 +9,20 @@ import UIKit
 
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
+    var parentsCoordinator: Coordinator? { get set }
     var navigationController: UINavigationController { get set }
+    var viewController: viewControllerProtocol? { get set }
     
     func start()
-    
     func childDidFinish(_ child: Coordinator?)
 }
 
 class MainCoordinator: Coordinator {
+    weak var parentsCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    var viewController: viewControllerProtocol?
+    
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -26,6 +30,8 @@ class MainCoordinator: Coordinator {
     
     func start() {
         let memoListCoordinator = MemoListCoordinator(navigationController: navigationController)
+        memoListCoordinator.parentsCoordinator = self
+        self.childCoordinators.append(memoListCoordinator)
         memoListCoordinator.start()
     }
     
@@ -38,4 +44,5 @@ class MainCoordinator: Coordinator {
             }
         }
     }
+    // MARK: 코디네이터 패턴 - 
 }

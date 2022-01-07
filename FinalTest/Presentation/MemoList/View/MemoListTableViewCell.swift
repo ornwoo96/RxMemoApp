@@ -10,16 +10,18 @@ import RxSwift
 import Then
 import Alamofire
 
-class MemoListCollectionViewCell: UICollectionViewCell {
-    static let identifier = "MemoListCollectionViewCell"
+class MemoListTableViewCell: UITableViewCell {
+    static let identifier = "MemoListTableViewCell"
     
     let disposeBag = DisposeBag()
+    
+    // MARK: 여기서 쓰이는게 아닐듯?
     var viewModel = PublishSubject<ResultViewModel>()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.do {
-            $0.font = UIFont.boldSystemFont(ofSize: 20)
+            $0.font = UIFont.boldSystemFont(ofSize: 17)
             $0.textColor = .black
             $0.text = "dd"
             $0.textColor = .black
@@ -36,8 +38,8 @@ class MemoListCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
         subscribe()
     }
@@ -50,7 +52,7 @@ class MemoListCollectionViewCell: UICollectionViewCell {
         self.viewModel
             .subscribe(onNext: { resultViewModel in
                 self.titleLabel.text = resultViewModel.foodName
-                self.contentLabel.text = resultViewModel.sugar
+                self.contentLabel.text = "당: \(resultViewModel.sugar ?? "")"
             })
             .disposed(by: disposeBag)
     }
@@ -60,13 +62,13 @@ class MemoListCollectionViewCell: UICollectionViewCell {
         
         titleLabel.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
+            $0.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
         }
         contentLabel.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
-            $0.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40).isActive = true
+            $0.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor).isActive = true
+            $0.leadingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor, constant: 10).isActive = true
         }
     }
 }
