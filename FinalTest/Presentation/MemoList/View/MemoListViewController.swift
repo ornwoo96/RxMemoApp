@@ -14,10 +14,9 @@ import Then
 
 class MemoListViewController: UIViewController, viewControllerProtocol {
     var coordinator: MemoListCoordinator?
-    var viewModel: MemoListViewModel!
+    var viewModel: MemoListViewModel?
     var disposeBag = DisposeBag()
     var memoTableView = UITableView()
-    
     lazy var createButton: UIBarButtonItem = {
         let button = UIBarButtonItem(image: UIImage(systemName: "plus"),
                                      style: .plain,
@@ -26,7 +25,6 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
         
         return button
     }()
-    
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "김치찌개, 냉면..."
@@ -93,13 +91,7 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
     
     func bind() {
         // MARK: ReloadData를 사용하고 싶어서 만든 옵저버이다! resultViewModel을 subscribe하면 되지 굳이?
-//        self.viewModel.resultViewModelObserver
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] results in
-//                self?.memoTableView.reloadData()
-//            })
-//            .disposed(by: disposeBag)
-        self.viewModel.resultViewModel
+        self.viewModel?.resultViewModel
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { result in
                 self.memoTableView.reloadData()
@@ -110,11 +102,11 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
 
 extension MemoListViewController: UISearchBarDelegate {
     @objc func createButtonDidTap(sender: UIBarButtonItem) {
-        print("버튼눌림")
+        viewModel?.showCreateView()
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.fetchResult(query: "\(searchBar.text ?? "")")
+    @objc func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        viewModel?.fetchResult(query: "\(searchBar.text ?? "")")
     }
 }
 
@@ -126,20 +118,20 @@ extension MemoListViewController: UITableViewDelegate {
 
 extension MemoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.resultViewModel.value.count
+        return viewModel?.resultViewModel.value.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memoTableView.dequeueReusableCell(withIdentifier: "MemoListTableViewCell", for: indexPath) as! MemoListTableViewCell
-        
-        let resultViewModel = viewModel.resultViewModel.value[indexPath.row]
-        
-        cell.viewModel.onNext(resultViewModel)
-        
+        if let resultViewModel = viewModel?.resultViewModel.value[indexPath.row] {
+            cell.viewModel.onNext(resultViewModel)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.showMemoDetailView(result: viewModel.result[indexPath.row])
+        if let selectedResult = viewModel?.result[indexPath.row] {
+            viewModel?.showMemoDetailView(result: selectedResult)
+        }
     }
 }

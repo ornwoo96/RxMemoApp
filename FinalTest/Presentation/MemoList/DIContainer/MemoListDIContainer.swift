@@ -10,10 +10,10 @@ import Foundation
 class MemoListDIContainer {
     
     func makeMemoListViewController(actions: MemoListViewModelActions) -> MemoListViewController {
-        return MemoListViewController.create(with: makeMemoListViewModel(actions: actions))
+        return MemoListViewController.create(with: makeMemoListViewModel(actions: actions) as! MemoListViewModel)
     }
     
-    func makeMemoListViewModel(actions: MemoListViewModelActions) -> MemoListViewModel {
+    func makeMemoListViewModel(actions: MemoListViewModelActions) -> MemoListViewModelProtocol {
         return MemoListViewModel(resultUseCase: makeResultUseCase(), actions: actions)
     }
     

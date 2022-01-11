@@ -27,6 +27,11 @@
 		0B904845277C940A0057AEE9 /* MemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904844277C940A0057AEE9 /* MemoListViewController.swift */; };
 		0B904847277C94440057AEE9 /* MemoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B904846277C94440057AEE9 /* MemoListViewModel.swift */; };
 		0B90484B277C94820057AEE9 /* MemoListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B90484A277C94820057AEE9 /* MemoListCoordinator.swift */; };
+		0BFC8BD5278C739500032744 /* CreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BD4278C739500032744 /* CreateViewController.swift */; };
+		0BFC8BD7278C739F00032744 /* CreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BD6278C739F00032744 /* CreateViewModel.swift */; };
+		0BFC8BD9278C73B000032744 /* CreateDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BD8278C73B000032744 /* CreateDIContainer.swift */; };
+		0BFC8BDB278C73C300032744 /* CreateCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDA278C73C300032744 /* CreateCoordinator.swift */; };
+		0BFC8BDD278C74BC00032744 /* CreateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */; };
 		5F98F437ED2396CDE9942A18 /* Pods_FinalTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D8D313EC1CBED5392DB48F /* Pods_FinalTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +59,11 @@
 		0B904844277C940A0057AEE9 /* MemoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewController.swift; sourceTree = "<group>"; };
 		0B904846277C94440057AEE9 /* MemoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListViewModel.swift; sourceTree = "<group>"; };
 		0B90484A277C94820057AEE9 /* MemoListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListCoordinator.swift; sourceTree = "<group>"; };
+		0BFC8BD4278C739500032744 /* CreateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewController.swift; sourceTree = "<group>"; };
+		0BFC8BD6278C739F00032744 /* CreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateViewModel.swift; sourceTree = "<group>"; };
+		0BFC8BD8278C73B000032744 /* CreateDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDIContainer.swift; sourceTree = "<group>"; };
+		0BFC8BDA278C73C300032744 /* CreateCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCoordinator.swift; sourceTree = "<group>"; };
+		0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUseCase.swift; sourceTree = "<group>"; };
 		86061FB32ABEFBBCA12BB6F4 /* Pods-FinalTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalTest.debug.xcconfig"; path = "Target Support Files/Pods-FinalTest/Pods-FinalTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F6A2568C4DE6F67D1BE614 /* Pods-FinalTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalTest.release.xcconfig"; path = "Target Support Files/Pods-FinalTest/Pods-FinalTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,11 +80,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0B3B11D4278478E000CD1C28 /* Search */ = {
+		0B3B11D4278478E000CD1C28 /* Create */ = {
 			isa = PBXGroup;
 			children = (
+				0BFC8BD3278C725900032744 /* Coordinator */,
+				0BFC8BD2278C725100032744 /* DIContainer */,
+				0BFC8BD1278C724B00032744 /* ViewModel */,
+				0BFC8BD0278C724600032744 /* View */,
 			);
-			path = Search;
+			path = Create;
 			sourceTree = "<group>";
 		};
 		0B57B66F277D574300A8DFF1 /* Entities */ = {
@@ -182,9 +196,9 @@
 		0B904829277C91C40057AEE9 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				0B3B11D4278478E000CD1C28 /* Search */,
 				0B90482D277C920D0057AEE9 /* MemoList */,
 				0B57B6772780509E00A8DFF1 /* MemoDetail */,
+				0B3B11D4278478E000CD1C28 /* Create */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -264,6 +278,7 @@
 			children = (
 				0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */,
 				0B90483D277C937D0057AEE9 /* MemoUseCase.swift */,
+				0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -274,6 +289,38 @@
 				0B90480E277C562F0057AEE9 /* FinalTest.xcdatamodeld */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0BFC8BD0278C724600032744 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BD4278C739500032744 /* CreateViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0BFC8BD1278C724B00032744 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BD6278C739F00032744 /* CreateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		0BFC8BD2278C725100032744 /* DIContainer */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BD8278C73B000032744 /* CreateDIContainer.swift */,
+			);
+			path = DIContainer;
+			sourceTree = "<group>";
+		};
+		0BFC8BD3278C725900032744 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BDA278C73C300032744 /* CreateCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		8EC701C92D5E31521B22C3A3 /* Pods */ = {
@@ -415,16 +462,21 @@
 				0B904835277C92620057AEE9 /* MemoListTableViewCell.swift in Sources */,
 				0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */,
 				0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */,
+				0BFC8BD5278C739500032744 /* CreateViewController.swift in Sources */,
 				0B57B681278050F100A8DFF1 /* MemoDetailDIContainer.swift in Sources */,
 				0B57B67D278050D000A8DFF1 /* MemoDetailViewController.swift in Sources */,
+				0BFC8BD9278C73B000032744 /* CreateDIContainer.swift in Sources */,
 				0B57B67F278050E000A8DFF1 /* MemoDetailViewModel.swift in Sources */,
 				0B57B683278050FF00A8DFF1 /* MemoDetailCoordinator.swift in Sources */,
+				0BFC8BDB278C73C300032744 /* CreateCoordinator.swift in Sources */,
 				0B904808277C562F0057AEE9 /* SceneDelegate.swift in Sources */,
 				0B904843277C93D60057AEE9 /* MemoListDIContainer.swift in Sources */,
 				0B90484B277C94820057AEE9 /* MemoListCoordinator.swift in Sources */,
+				0BFC8BD7278C739F00032744 /* CreateViewModel.swift in Sources */,
 				0B904847277C94440057AEE9 /* MemoListViewModel.swift in Sources */,
 				0B57B671277D575C00A8DFF1 /* Result.swift in Sources */,
 				0B57B676277D7D8700A8DFF1 /* ResultViewModel.swift in Sources */,
+				0BFC8BDD278C74BC00032744 /* CreateUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
