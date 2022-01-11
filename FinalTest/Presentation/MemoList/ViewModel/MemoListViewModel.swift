@@ -11,7 +11,6 @@ import RxRelay
 
 struct MemoListViewModelActions {
     let showMemoDetailView: (Result) -> Void
-    let showCreateView: () -> Void
 }
 
 protocol MemoListViewModelInput {
@@ -66,8 +65,5 @@ extension MemoListViewModel {
         actions?.showMemoDetailView(result)
     }
     
-    func showCreateView() {
-        actions?.showCreateView()
-    }
     
 }

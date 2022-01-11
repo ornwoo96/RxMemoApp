@@ -17,14 +17,6 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
     var viewModel: MemoListViewModel?
     var disposeBag = DisposeBag()
     var memoTableView = UITableView()
-    lazy var createButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(image: UIImage(systemName: "plus"),
-                                     style: .plain,
-                                     target: self,
-                                     action: #selector(createButtonDidTap(sender:)))
-        
-        return button
-    }()
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "김치찌개, 냉면..."
@@ -41,6 +33,7 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        self.title = "음식 검색"
         setupViews()
         bind()
         searchBar.delegate = self
@@ -51,23 +44,6 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
     }
     
     func setupViews() {
-        configureNavigationBar()
-        configureMemoCollectionView()
-    }
-    
-    func configureNavigationBar() {
-        navigationController?.do {
-            $0.navigationBar.topItem?.title = "MemoList"
-            $0.navigationBar.prefersLargeTitles = true
-        }
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .add,
-            target: self,
-            action: #selector(createButtonDidTap(sender:))
-        )
-    }
-    
-    func configureMemoCollectionView() {
         [ memoTableView, searchBar ].forEach() { view.addSubview($0) }
         
         memoTableView.do {
@@ -101,10 +77,6 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
 }
 
 extension MemoListViewController: UISearchBarDelegate {
-    @objc func createButtonDidTap(sender: UIBarButtonItem) {
-        viewModel?.showCreateView()
-    }
-    
     @objc func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel?.fetchResult(query: "\(searchBar.text ?? "")")
     }

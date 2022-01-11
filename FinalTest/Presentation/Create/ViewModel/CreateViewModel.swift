@@ -8,11 +8,12 @@
 import Foundation
 
 struct CreateViewModelAction {
-    
+    let createButtonDidTap: () -> Void
 }
 
 protocol CreateViewModelInput {
-    
+    func viewDidLoad()
+    func createButtonDidTap()
 }
 
 protocol CreateViewModelOuput {
@@ -36,4 +37,11 @@ class CreateViewModel: CreateViewModelProtocol {
 // MARK: Input - Methods
 extension CreateViewModel {
     
+    func createButtonDidTap() {
+        actions?.createButtonDidTap()
+    }
+    
+    func viewDidLoad() {
+        <#code#>
+    }
 }

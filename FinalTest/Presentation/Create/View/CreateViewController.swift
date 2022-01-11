@@ -15,52 +15,31 @@ class CreateViewController: UIViewController, viewControllerProtocol {
     var coordinator: Coordinator?
     var disposeBag = DisposeBag()
     
-    var titleLabel: UILabel = {
+    var dangLabel: UILabel = {
         let label = UILabel()
         label.do {
+            $0.font = UIFont.boldSystemFont(ofSize: 15)
             $0.textColor = .black
-            $0.font = UIFont.boldSystemFont(ofSize: 20)
-            $0.text = "Bind를 써보고 싶어서..."
         }
         return label
     }()
-    var sortLabel: UILabel = {
-        let label = UILabel()
-        label.do {
-            $0.textColor = .black
-            $0.font = UIFont.systemFont(ofSize: 18)
-            $0.text = "정렬 기준"
-        }
-        return label
-    }()
-    var optionSortNewest: UIButton = {
-        let button = UIButton()
-        button.do {
-            $0.titleLabel?.text = "최신순"
-            $0.backgroundColor = .blue
-        }
-        return button
-    }()
-    var optionSortOlest: UIButton = {
-        let button = UIButton()
-        
-        return button
-    }()
-    var termLabel: UILabel = {
-        let label = UILabel()
-        label.do {
-            $0.textColor = .black
-            $0.font = UIFont.systemFont(ofSize: 18)
-            $0.text = "기간 설정"
-        }
-        return label
-    }()
+    var foodsTableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configure()
         setupUI()
+        configureNavigationBar()
         bind()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        coordinator?.childDidFinish(coordinator)
     }
     
     static func create(with viewModel: CreateViewModel) -> CreateViewController{
@@ -69,46 +48,70 @@ class CreateViewController: UIViewController, viewControllerProtocol {
         return view
     }
     
-    func setupUI() {
-        [ titleLabel, sortLabel, optionSortNewest, optionSortOlest, termLabel ].forEach() { view.addSubview($0) }
-        
-        titleLabel.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
-            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        }
-        sortLabel.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
-            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
-        }
-        optionSortNewest.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            $0.heightAnchor.constraint(equalToConstant: 40).isActive = true
-            $0.topAnchor.constraint(equalTo: sortLabel.bottomAnchor, constant: 20).isActive = true
-        }
-        optionSortOlest.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        termLabel.do {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.topAnchor.constraint(equalTo: optionSortNewest.bottomAnchor, constant: 20).isActive = true
-            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+    func configure() {
+        foodsTableView.do {
+            $0.register(CreateTableViewCell.self, forCellReuseIdentifier: "CreateTableViewCell")
+            $0.delegate = self
+            $0.dataSource = self
         }
     }
     
-    func bind() {
-        optionSortNewest.rx.tap
-            .bind {
-                print("최신순 클릭됨")
-            }
-            .disposed(by: disposeBag)
+    func setupUI() {
+        [ dangLabel, foodsTableView ].forEach() { view.addSubview($0) }
         
+        dangLabel.do {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
+        }
+        foodsTableView.do {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.topAnchor.constraint(equalTo: dangLabel.bottomAnchor, constant: 10).isActive = true
+            $0.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            $0.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            $0.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
+    }
+    
+    func configureNavigationBar() {
+        navigationController?.do {
+            $0.navigationBar.topItem?.title = "Food eaten Today"
+            $0.navigationBar.prefersLargeTitles = true
+        }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(createButtonDidTap(sender:))
+        )
+    }
+    
+    func bind() {
         
     }
 }
 
 extension CreateViewController {
+    @objc func createButtonDidTap(sender: UIBarButtonItem) {
+        viewModel?.createButtonDidTap()
+    }
+}
+
+extension CreateViewController: UITableViewDelegate {
+    
+}
+
+extension CreateViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let defaultCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell", for: indexPath) as? CreateTableViewCell else { return defaultCell }
+        
+        
+        return cell
+    }
+    
     
 }

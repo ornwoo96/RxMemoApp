@@ -10,25 +10,26 @@ import UIKit
 class MemoListCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
+    var navigationController = UINavigationController()
     var viewController: viewControllerProtocol?
     var presentingViewController: viewControllerProtocol?
     
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init(presentingViewController: viewControllerProtocol) {
+        self.presentingViewController = presentingViewController
     }
     
     func start() {
         let memoListDIContainer = MemoListDIContainer()
-        let actions = MemoListViewModelActions(showMemoDetailView: showMemoDetailView,
-                                               showCreateView: showCreateView)
+        let actions = MemoListViewModelActions(showMemoDetailView: showMemoDetailView)
         let viewController = memoListDIContainer.makeMemoListViewController(actions: actions)
         viewController.coordinator = self
         parentsCoordinator?.viewController = viewController
         parentsCoordinator?.childCoordinators.append(self)
-        self.navigationController.pushViewController(viewController, animated: false)
+        guard let presentingView = presentingViewController as? UIViewController else { return }
+        let memoListView = UINavigationController(rootViewController: viewController)
+        presentingView.present(memoListView, animated: true)
         presentingViewController = viewController
-        
+        self.navigationController = memoListView
     }
     
     func childDidFinish(_ child: Coordinator?) {
@@ -45,14 +46,5 @@ class MemoListCoordinator: Coordinator {
         memoDetailCoordinator.parentsCoordinator = self
         self.childCoordinators.append(memoDetailCoordinator)
         memoDetailCoordinator.start()
-    }
-    
-    func showCreateView() {
-        guard let presentView = presentingViewController else { return }
-        let createCoordinator = CreateCoordinator(navigationController: navigationController,
-                                                  presentingViewController: presentView)
-        createCoordinator.parentsCoordinator = self
-        self.childCoordinators.append(createCoordinator)
-        createCoordinator.start()
     }
 }

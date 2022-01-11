@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MemoDetailViewModelInput {
-    
+    func addButtonDidTap()
 }
 
 protocol MemoDetailViewModelOuput {
@@ -32,5 +32,7 @@ class MemoDetailViewModel: MemoDetailViewModelProtocol {
 
 // MARK: Input - View Methods
 extension MemoDetailViewModel {
-    
+    func addButtonDidTap() {
+        memoUseCase.createEntity(result: result)
+    }
 }

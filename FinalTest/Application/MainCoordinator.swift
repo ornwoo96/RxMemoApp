@@ -10,7 +10,6 @@ import UIKit
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var parentsCoordinator: Coordinator? { get set }
-    var navigationController: UINavigationController { get set }
     var viewController: viewControllerProtocol? { get set }
     
     func start()
@@ -29,10 +28,10 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let memoListCoordinator = MemoListCoordinator(navigationController: navigationController)
-        memoListCoordinator.parentsCoordinator = self
-        self.childCoordinators.append(memoListCoordinator)
-        memoListCoordinator.start()
+        let createCoordinator = CreateCoordinator(navigationController: navigationController)
+        createCoordinator.parentsCoordinator = self
+        self.childCoordinators.append(createCoordinator)
+        createCoordinator.start()
     }
     
     // MARK: 이건 삭제~

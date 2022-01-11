@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 protocol viewControllerProtocol: AnyObject {
     
@@ -15,6 +17,7 @@ protocol viewControllerProtocol: AnyObject {
 class MemoDetailViewController: UIViewController, viewControllerProtocol {
     var viewModel: MemoDetailViewModel?
     weak var coordinator: MemoDetailCoordinator?
+    let disposeBag = DisposeBag()
     
     lazy var foodNameLabel: UILabel = {
         let label = UILabel()
@@ -88,21 +91,19 @@ class MemoDetailViewController: UIViewController, viewControllerProtocol {
         return label
     }()
     
-    lazy var removeButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.text = "코디네이터 삭제"
-        button.backgroundColor = .blue
-        button.addTarget(self,
-                         action: #selector(removeButtonDidTap(sender:)),
-                         for: .touchUpInside)
-        
+        button.setTitle("추가하기", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.setTitleColor(.darkGray, for: .normal)
+        button.backgroundColor = .white
         return button
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.title = "MemoDetail"
+        self.title = "음식 추가하기"
         setupViews()
         bind()
     }
@@ -136,13 +137,20 @@ class MemoDetailViewController: UIViewController, viewControllerProtocol {
         sugarLabel.text = "당 : " + sugar
         sodiumLabel.text = "소디움? : " + sodium
         cholesterolLabel.text = "콜레스테롤 : " + cholesterol
+        
+        addButton.rx.tap
+            .bind {
+                print("추가하기 클릭")
+                self.viewModel?.addButtonDidTap()
+            }
+            .disposed(by: disposeBag)
     }
     
     func setupViews() {
         [ foodNameLabel, regionNameLabel, calorieLabel,
         carbohydrateLabel, proteinLabel, fatLabel,
           sugarLabel, sodiumLabel, cholesterolLabel,
-          removeButton ].forEach() { view.addSubview($0) }
+          addButton ].forEach() { view.addSubview($0) }
         
         foodNameLabel.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -189,7 +197,7 @@ class MemoDetailViewController: UIViewController, viewControllerProtocol {
             $0.topAnchor.constraint(equalTo: sodiumLabel.bottomAnchor, constant: 10).isActive = true
             $0.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35).isActive = true
         }
-        removeButton.do {
+        addButton.do {
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.topAnchor.constraint(equalTo: cholesterolLabel.bottomAnchor, constant: 50).isActive = true
             $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -197,13 +205,11 @@ class MemoDetailViewController: UIViewController, viewControllerProtocol {
             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         }
     }
-    
+}
+
+extension MemoDetailViewController {
     @objc func removeButtonDidTap(sender: UIButton) {
-        
         coordinator?.removeAllCoordinator()
-        print("코디네이터들 다 삭제")
     }
-    
-    
 }
 
