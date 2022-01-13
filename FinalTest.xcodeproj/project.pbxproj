@@ -34,6 +34,11 @@
 		0BFC8BDD278C74BC00032744 /* CreateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */; };
 		0BFC8BDF278DC66600032744 /* CreateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDE278DC66600032744 /* CreateTableViewCell.swift */; };
 		0BFC8BE1278DCC7100032744 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE0278DCC7100032744 /* CoreDataHelper.swift */; };
+		0BFC8BE3278E937C00032744 /* EntityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE2278E937C00032744 /* EntityRepository.swift */; };
+		0BFC8BE5278E948600032744 /* CreateTableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE4278E948600032744 /* CreateTableItemViewModel.swift */; };
+		0BFC8BE8278E9AB400032744 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE7278E9AB400032744 /* RepositoryProtocol.swift */; };
+		0BFC8BEB278EAB3400032744 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BEA278EAB3400032744 /* CoordinatorProtocol.swift */; };
+		0BFC8BEE278EAECA00032744 /* ViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BED278EAECA00032744 /* ViewControllerProtocol.swift */; };
 		5F98F437ED2396CDE9942A18 /* Pods_FinalTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D8D313EC1CBED5392DB48F /* Pods_FinalTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +73,11 @@
 		0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUseCase.swift; sourceTree = "<group>"; };
 		0BFC8BDE278DC66600032744 /* CreateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTableViewCell.swift; sourceTree = "<group>"; };
 		0BFC8BE0278DCC7100032744 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		0BFC8BE2278E937C00032744 /* EntityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityRepository.swift; sourceTree = "<group>"; };
+		0BFC8BE4278E948600032744 /* CreateTableItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTableItemViewModel.swift; sourceTree = "<group>"; };
+		0BFC8BE7278E9AB400032744 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
+		0BFC8BEA278EAB3400032744 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		0BFC8BED278EAECA00032744 /* ViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocol.swift; sourceTree = "<group>"; };
 		86061FB32ABEFBBCA12BB6F4 /* Pods-FinalTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalTest.debug.xcconfig"; path = "Target Support Files/Pods-FinalTest/Pods-FinalTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D9F6A2568C4DE6F67D1BE614 /* Pods-FinalTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalTest.release.xcconfig"; path = "Target Support Files/Pods-FinalTest/Pods-FinalTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,6 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				0B3B11D2278317EE00CD1C28 /* FetchResearchRepository.swift */,
+				0BFC8BE2278E937C00032744 /* EntityRepository.swift */,
+				0BFC8BE6278E9A6700032744 /* Interfaces */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -193,6 +205,7 @@
 				0B904805277C562F0057AEE9 /* AppDelegate.swift */,
 				0B904807277C562F0057AEE9 /* SceneDelegate.swift */,
 				0B90482A277C91D40057AEE9 /* MainCoordinator.swift */,
+				0BFC8BE9278EAB1400032744 /* Interfaces */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -309,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				0BFC8BD6278C739F00032744 /* CreateViewModel.swift */,
+				0BFC8BE4278E948600032744 /* CreateTableItemViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -327,6 +341,23 @@
 				0BFC8BDA278C73C300032744 /* CreateCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		0BFC8BE6278E9A6700032744 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BE7278E9AB400032744 /* RepositoryProtocol.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		0BFC8BE9278EAB1400032744 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				0BFC8BEA278EAB3400032744 /* CoordinatorProtocol.swift */,
+				0BFC8BED278EAECA00032744 /* ViewControllerProtocol.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		8EC701C92D5E31521B22C3A3 /* Pods */ = {
@@ -470,14 +501,19 @@
 				0B904835277C92620057AEE9 /* MemoListTableViewCell.swift in Sources */,
 				0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */,
 				0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */,
+				0BFC8BEB278EAB3400032744 /* CoordinatorProtocol.swift in Sources */,
 				0BFC8BD5278C739500032744 /* CreateViewController.swift in Sources */,
 				0B57B681278050F100A8DFF1 /* MemoDetailDIContainer.swift in Sources */,
+				0BFC8BE5278E948600032744 /* CreateTableItemViewModel.swift in Sources */,
+				0BFC8BE8278E9AB400032744 /* RepositoryProtocol.swift in Sources */,
 				0B57B67D278050D000A8DFF1 /* MemoDetailViewController.swift in Sources */,
 				0BFC8BD9278C73B000032744 /* CreateDIContainer.swift in Sources */,
 				0B57B67F278050E000A8DFF1 /* MemoDetailViewModel.swift in Sources */,
+				0BFC8BEE278EAECA00032744 /* ViewControllerProtocol.swift in Sources */,
 				0B57B683278050FF00A8DFF1 /* MemoDetailCoordinator.swift in Sources */,
 				0BFC8BDB278C73C300032744 /* CreateCoordinator.swift in Sources */,
 				0B904808277C562F0057AEE9 /* SceneDelegate.swift in Sources */,
+				0BFC8BE3278E937C00032744 /* EntityRepository.swift in Sources */,
 				0B904843277C93D60057AEE9 /* MemoListDIContainer.swift in Sources */,
 				0B90484B277C94820057AEE9 /* MemoListCoordinator.swift in Sources */,
 				0BFC8BD7278C739F00032744 /* CreateViewModel.swift in Sources */,

@@ -9,10 +9,9 @@ import Foundation
 import UIKit
 
 class MemoDetailCoordinator: Coordinator {
-    var viewController: viewControllerProtocol?
-    
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
+    var viewController: ViewControllerProtocol?
     var result: Result
     var navigationController: UINavigationController
     
@@ -26,6 +25,7 @@ class MemoDetailCoordinator: Coordinator {
         let viewController = memoDetailDIContainer.makeMemoDetailViewController(result: result)
         viewController.coordinator = self
         parentsCoordinator?.viewController = viewController
+        
         self.navigationController.pushViewController(viewController, animated: true)
     }
     

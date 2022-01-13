@@ -12,7 +12,7 @@ class CreateCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var viewController: viewControllerProtocol?
+    var viewController: ViewControllerProtocol?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -20,8 +20,7 @@ class CreateCoordinator: Coordinator {
     
     func start() {
         let diContainer = CreateDIContainer()
-        let actions = CreateViewModelAction(createButtonDidTap: showMemoListViewController)
-        let viewController = diContainer.makeCreateViewController(actions: actions)
+        let viewController = diContainer.makeCreateViewController()
         viewController.coordinator = self
         parentsCoordinator?.viewController = viewController
         parentsCoordinator?.childCoordinators.append(self)
@@ -38,11 +37,19 @@ class CreateCoordinator: Coordinator {
         }
     }
     
+    
+    // MARK: 이번 주에 와냐한테 물어보기
     func showMemoListViewController() {
-        guard let viewController = self.viewController else { return }
-        let memoListCoordinator = MemoListCoordinator(presentingViewController: viewController)
-        memoListCoordinator.parentsCoordinator = self
-        self.childCoordinators.append(memoListCoordinator)
-        memoListCoordinator.start()
+        guard let viewController = self.viewController as? UIViewController else { return }
+        
+        let MemoListViewController = MemoListDIContainer().makeMemoListViewController()
+        
+        let navigation = UINavigationController(rootViewController: MemoListViewController)
+        
+        let coordinator = MemoListCoordinator(navigationViewController: navigation)
+        
+        MemoListViewController.coordinator = coordinator
+        
+        viewController.present(navigation, animated: true)
     }
 }

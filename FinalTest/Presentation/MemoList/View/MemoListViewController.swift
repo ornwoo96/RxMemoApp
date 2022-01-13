@@ -10,9 +10,7 @@ import RxSwift
 import RxCocoa
 import Then
 
-// MARK: async await 공부
-
-class MemoListViewController: UIViewController, viewControllerProtocol {
+class MemoListViewController: UIViewController, ViewControllerProtocol {
     var coordinator: MemoListCoordinator?
     var viewModel: MemoListViewModel?
     var disposeBag = DisposeBag()
@@ -73,6 +71,7 @@ class MemoListViewController: UIViewController, viewControllerProtocol {
                 self.memoTableView.reloadData()
             })
             .disposed(by: disposeBag)
+        
     }
 }
 
@@ -103,7 +102,7 @@ extension MemoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedResult = viewModel?.result[indexPath.row] {
-            viewModel?.showMemoDetailView(result: selectedResult)
+            coordinator?.showMemoDetailView(resultData: selectedResult)
         }
     }
 }

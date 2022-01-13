@@ -18,13 +18,6 @@ class MemoUseCase: MemoUseCaseProtocol {
     }
     
     func loadEnetityData() {
-        CoreDataHelper.instance.getEntity { error, data in
-            if let data = data {
-                
-            }
-            if let error = error {
-                
-            }
-        }
+        
     }
 }

@@ -7,20 +7,11 @@
 
 import UIKit
 
-protocol Coordinator: AnyObject {
-    var childCoordinators: [Coordinator] { get set }
-    var parentsCoordinator: Coordinator? { get set }
-    var viewController: viewControllerProtocol? { get set }
-    
-    func start()
-    func childDidFinish(_ child: Coordinator?)
-}
-
 class MainCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    var viewController: viewControllerProtocol?
+    var viewController: ViewControllerProtocol?
     
     
     init(navigationController: UINavigationController) {

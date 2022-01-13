@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateViewController: UIViewController, viewControllerProtocol {
+class CreateViewController: UIViewController, ViewControllerProtocol {
     private var viewModel: CreateViewModel?
     var coordinator: Coordinator?
     var disposeBag = DisposeBag()
@@ -92,7 +92,9 @@ class CreateViewController: UIViewController, viewControllerProtocol {
 
 extension CreateViewController {
     @objc func createButtonDidTap(sender: UIBarButtonItem) {
-        viewModel?.createButtonDidTap()
+        if let coordinator = coordinator as? CreateCoordinator {
+            coordinator.showMemoListViewController()
+        }
     }
 }
 
@@ -106,12 +108,8 @@ extension CreateViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let defaultCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell", for: indexPath) as? CreateTableViewCell else { return defaultCell }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell", for: indexPath) as! CreateTableViewCell
         
         return cell
     }
-    
-    
 }

@@ -10,11 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-protocol viewControllerProtocol: AnyObject {
-    
-}
-
-class MemoDetailViewController: UIViewController, viewControllerProtocol {
+class MemoDetailViewController: UIViewController, ViewControllerProtocol {
     var viewModel: MemoDetailViewModel?
     weak var coordinator: MemoDetailCoordinator?
     let disposeBag = DisposeBag()

@@ -9,17 +9,12 @@ import Foundation
 import RxSwift
 import RxRelay
 
-struct MemoListViewModelActions {
-    let showMemoDetailView: (Result) -> Void
-}
-
 protocol MemoListViewModelInput {
     func fetchResult(query: String)
 }
 
 protocol MemoListViewModelOuput {
     var resultViewModel: BehaviorRelay<[ResultViewModel]> { get }
-    var resultViewModelObserver: Observable<[ResultViewModel]> { get }
     var result: [Result] { get }
 }
 
@@ -27,21 +22,16 @@ protocol MemoListViewModelProtocol: MemoListViewModelInput, MemoListViewModelOup
 
 class MemoListViewModel: MemoListViewModelProtocol {
     private let resultUseCase: ResultUseCaseProtocol
-    private let actions: MemoListViewModelActions?
     
     // MARK: Ouput
     var resultViewModel = BehaviorRelay<[ResultViewModel]>(value: [])
-    var resultViewModelObserver: Observable<[ResultViewModel]> {
-        return resultViewModel.asObservable()
-    }
+    
     var result: [Result] = []
     var disposeBag = DisposeBag()
     
     
-    init(resultUseCase: ResultUseCaseProtocol,
-         actions: MemoListViewModelActions) {
+    init(resultUseCase: ResultUseCaseProtocol) {
         self.resultUseCase = resultUseCase
-        self.actions = actions
     }
     
     func fetchResult(query: String) {
@@ -60,10 +50,6 @@ class MemoListViewModel: MemoListViewModelProtocol {
 extension MemoListViewModel {
     
     func viewDidLoad() {}
-    
-    func showMemoDetailView(result: Result) {
-        actions?.showMemoDetailView(result)
-    }
     
     
 }

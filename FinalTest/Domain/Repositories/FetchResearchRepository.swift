@@ -9,12 +9,6 @@ import Foundation
 import Alamofire
 import RxSwift
 
-protocol FetchResearchRepositoryProtocol {
-    var resultData: [Result] { get set }
-    
-    func fetchResultData(query: String, completion: @escaping ((Error?, [Result]?) -> Void))
-}
-
 class FetchResearchRepository: FetchResearchRepositoryProtocol {
     var resultData: [Result] = []
     

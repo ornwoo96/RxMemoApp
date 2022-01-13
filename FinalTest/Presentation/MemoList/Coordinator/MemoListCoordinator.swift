@@ -11,25 +11,30 @@ class MemoListCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController = UINavigationController()
-    var viewController: viewControllerProtocol?
-    var presentingViewController: viewControllerProtocol?
+    var viewController: ViewControllerProtocol?
+    var presentingViewController: ViewControllerProtocol?
     
-    init(presentingViewController: viewControllerProtocol) {
-        self.presentingViewController = presentingViewController
+    init(navigationViewController: UINavigationController) {
+        self.navigationController = navigationViewController
+    }
+    
+    // MARK: 똑같이 반복되는 코드들 함수로 빼고 싶다~
+    func setUpDIContainer(completion: ((UIViewController) -> Void)) {
+        let memoListDIContainer = MemoListDIContainer()
+        let viewController = memoListDIContainer.makeMemoListViewController()
+        viewController.coordinator = self
+        
+        return completion(viewController)
     }
     
     func start() {
-        let memoListDIContainer = MemoListDIContainer()
-        let actions = MemoListViewModelActions(showMemoDetailView: showMemoDetailView)
-        let viewController = memoListDIContainer.makeMemoListViewController(actions: actions)
-        viewController.coordinator = self
-        parentsCoordinator?.viewController = viewController
-        parentsCoordinator?.childCoordinators.append(self)
-        guard let presentingView = presentingViewController as? UIViewController else { return }
-        let memoListView = UINavigationController(rootViewController: viewController)
-        presentingView.present(memoListView, animated: true)
-        presentingViewController = viewController
-        self.navigationController = memoListView
+        setUpDIContainer { viewController in
+            guard let viewController = viewController as? ViewControllerProtocol else { return }
+            self.parentsCoordinator?.viewController = viewController
+            self.parentsCoordinator?.childCoordinators.append(self)
+            self.navigationController.pushViewController(viewController as! UIViewController, animated: false)
+            self.viewController = viewController
+        }
     }
     
     func childDidFinish(_ child: Coordinator?) {
@@ -41,8 +46,16 @@ class MemoListCoordinator: Coordinator {
         }
     }
     
+    func presentMemoListViewController() -> UINavigationController {
+        let diContainer = MemoListDIContainer()
+        let viewController = diContainer.makeMemoListViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        return navigationController
+    }
+    
     func showMemoDetailView(resultData: Result) {
-        let memoDetailCoordinator = MemoDetailCoordinator(result: resultData, navigationController: navigationController)
+        let memoDetailCoordinator = MemoDetailCoordinator(result: resultData, navigationController: self.navigationController)
         memoDetailCoordinator.parentsCoordinator = self
         self.childCoordinators.append(memoDetailCoordinator)
         memoDetailCoordinator.start()

@@ -9,12 +9,12 @@ import Foundation
 
 class CreateDIContainer {
     
-    func makeCreateViewController(actions: CreateViewModelAction) -> CreateViewController {
-        return CreateViewController.create(with: makeCreateViewModel(actions: actions) as! CreateViewModel)
+    func makeCreateViewController() -> CreateViewController {
+        return CreateViewController.create(with: makeCreateViewModel() as! CreateViewModel)
     }
     
-    func makeCreateViewModel(actions: CreateViewModelAction) -> CreateViewModelProtocol {
-        return CreateViewModel(useCase: makeCreateUseCase(), actions: actions)
+    func makeCreateViewModel() -> CreateViewModelProtocol {
+        return CreateViewModel(useCase: makeCreateUseCase())
     }
     
     func makeCreateUseCase() -> CreateUseCaseProtocol {

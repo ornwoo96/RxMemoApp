@@ -33,8 +33,8 @@ class CoreDataHelper {
         var entity = [Entity]()
         do {
             entity = try context.fetch(Entity.fetchRequest())
-            return completion(nil, entity)
             print("entity 가져오기 성공!")
+            return completion(nil, entity)
         } catch {
             print(error)
         }
