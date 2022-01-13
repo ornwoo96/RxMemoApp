@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B3B11D3278317EE00CD1C28 /* FetchResearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B11D2278317EE00CD1C28 /* FetchResearchRepository.swift */; };
+		0B57552927900A720018BEC6 /* EntityCreateRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57552827900A720018BEC6 /* EntityCreateRepository.swift */; };
 		0B57B671277D575C00A8DFF1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57B670277D575C00A8DFF1 /* Result.swift */; };
 		0B57B674277D608A00A8DFF1 /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */; };
 		0B57B676277D7D8700A8DFF1 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B57B675277D7D8700A8DFF1 /* ResultViewModel.swift */; };
@@ -34,7 +35,7 @@
 		0BFC8BDD278C74BC00032744 /* CreateUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */; };
 		0BFC8BDF278DC66600032744 /* CreateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BDE278DC66600032744 /* CreateTableViewCell.swift */; };
 		0BFC8BE1278DCC7100032744 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE0278DCC7100032744 /* CoreDataHelper.swift */; };
-		0BFC8BE3278E937C00032744 /* EntityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE2278E937C00032744 /* EntityRepository.swift */; };
+		0BFC8BE3278E937C00032744 /* executeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE2278E937C00032744 /* executeRepository.swift */; };
 		0BFC8BE5278E948600032744 /* CreateTableItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE4278E948600032744 /* CreateTableItemViewModel.swift */; };
 		0BFC8BE8278E9AB400032744 /* RepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BE7278E9AB400032744 /* RepositoryProtocol.swift */; };
 		0BFC8BEB278EAB3400032744 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BFC8BEA278EAB3400032744 /* CoordinatorProtocol.swift */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		08D8D313EC1CBED5392DB48F /* Pods_FinalTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B3B11D2278317EE00CD1C28 /* FetchResearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchResearchRepository.swift; sourceTree = "<group>"; };
+		0B57552827900A720018BEC6 /* EntityCreateRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityCreateRepository.swift; sourceTree = "<group>"; };
 		0B57B670277D575C00A8DFF1 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		0B57B675277D7D8700A8DFF1 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
@@ -73,7 +75,7 @@
 		0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateUseCase.swift; sourceTree = "<group>"; };
 		0BFC8BDE278DC66600032744 /* CreateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTableViewCell.swift; sourceTree = "<group>"; };
 		0BFC8BE0278DCC7100032744 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
-		0BFC8BE2278E937C00032744 /* EntityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityRepository.swift; sourceTree = "<group>"; };
+		0BFC8BE2278E937C00032744 /* executeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = executeRepository.swift; sourceTree = "<group>"; };
 		0BFC8BE4278E948600032744 /* CreateTableItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTableItemViewModel.swift; sourceTree = "<group>"; };
 		0BFC8BE7278E9AB400032744 /* RepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryProtocol.swift; sourceTree = "<group>"; };
 		0BFC8BEA278EAB3400032744 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
@@ -117,7 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				0B3B11D2278317EE00CD1C28 /* FetchResearchRepository.swift */,
-				0BFC8BE2278E937C00032744 /* EntityRepository.swift */,
+				0BFC8BE2278E937C00032744 /* executeRepository.swift */,
+				0B57552827900A720018BEC6 /* EntityCreateRepository.swift */,
 				0BFC8BE6278E9A6700032744 /* Interfaces */,
 			);
 			path = Repositories;
@@ -293,9 +296,9 @@
 		0B904848277C94550057AEE9 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */,
 				0B57B673277D608A00A8DFF1 /* ResultUseCase.swift */,
 				0B90483D277C937D0057AEE9 /* MemoUseCase.swift */,
-				0BFC8BDC278C74BC00032744 /* CreateUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				0BFC8BDF278DC66600032744 /* CreateTableViewCell.swift in Sources */,
 				0BFC8BE1278DCC7100032744 /* CoreDataHelper.swift in Sources */,
 				0B90482B277C91D40057AEE9 /* MainCoordinator.swift in Sources */,
+				0B57552927900A720018BEC6 /* EntityCreateRepository.swift in Sources */,
 				0B90483E277C937D0057AEE9 /* MemoUseCase.swift in Sources */,
 				0B904835277C92620057AEE9 /* MemoListTableViewCell.swift in Sources */,
 				0B904806277C562F0057AEE9 /* AppDelegate.swift in Sources */,
@@ -513,7 +517,7 @@
 				0B57B683278050FF00A8DFF1 /* MemoDetailCoordinator.swift in Sources */,
 				0BFC8BDB278C73C300032744 /* CreateCoordinator.swift in Sources */,
 				0B904808277C562F0057AEE9 /* SceneDelegate.swift in Sources */,
-				0BFC8BE3278E937C00032744 /* EntityRepository.swift in Sources */,
+				0BFC8BE3278E937C00032744 /* executeRepository.swift in Sources */,
 				0B904843277C93D60057AEE9 /* MemoListDIContainer.swift in Sources */,
 				0B90484B277C94820057AEE9 /* MemoListCoordinator.swift in Sources */,
 				0BFC8BD7278C739F00032744 /* CreateViewModel.swift in Sources */,

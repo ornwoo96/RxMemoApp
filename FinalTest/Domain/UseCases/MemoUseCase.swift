@@ -9,15 +9,10 @@ import Foundation
 
 protocol MemoUseCaseProtocol: AnyObject {
     func createEntity(result: Result)
-    func loadEnetityData()
 }
 
 class MemoUseCase: MemoUseCaseProtocol {
     func createEntity(result: Result) {
         CoreDataHelper.instance.createEntity(foodName: result.descKor ?? "", dang: result.nutrCont5 ?? "")
-    }
-    
-    func loadEnetityData() {
-        
     }
 }

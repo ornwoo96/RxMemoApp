@@ -32,6 +32,7 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel?.viewDidLoad()
         configure()
         setupUI()
         configureNavigationBar()
@@ -85,9 +86,7 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
         )
     }
     
-    func bind() {
-        
-    }
+    func bind() {}
 }
 
 extension CreateViewController {
@@ -104,11 +103,15 @@ extension CreateViewController: UITableViewDelegate {
 
 extension CreateViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return viewModel?.entity.value.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell", for: indexPath) as! CreateTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell",
+                                                 for: indexPath) as! CreateTableViewCell
+        if let entity = viewModel?.entity.value[indexPath.row] {
+            cell.viewModel.onNext(entity)
+        }
         
         return cell
     }

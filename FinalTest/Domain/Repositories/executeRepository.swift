@@ -12,13 +12,13 @@ class EntityRepository {
         CoreDataHelper.instance.createEntity(foodName: result.descKor ?? "", dang: result.nutrCont5 ?? "")
     }
     
-    func loadEnetityData() {
+    func loadEnetityData(completion: @escaping ((Error?, [Entity]?) -> Void)) {
         CoreDataHelper.instance.getEntity { error, data in
             if let data = data {
-                
+                return completion(nil, data)
             }
             if let error = error {
-                
+                return completion(error, nil)
             }
         }
     }

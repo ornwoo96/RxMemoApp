@@ -11,8 +11,8 @@ struct CreateTableItemViewModel {
     let foodName: String
     let dang: String
     
-    init(result: Result) {
-        self.foodName = result.descKor ?? ""
-        self.dang = result.nutrCont5 ?? ""
+    init(entity: Entity) {
+        self.foodName = entity.foodName ?? ""
+        self.dang = entity.dang ?? ""
     }
 }

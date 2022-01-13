@@ -17,7 +17,11 @@ class CreateDIContainer {
         return CreateViewModel(useCase: makeCreateUseCase())
     }
     
-    func makeCreateUseCase() -> CreateUseCaseProtocol {
-        return CreateUseCase()
+    func makeCreateUseCase() -> CreateUseCase {
+        return CreateUseCase(repository: makeEntityRepository())
+    }
+    
+    func makeEntityRepository() -> EntityRepository {
+        return EntityRepository()
     }
 }

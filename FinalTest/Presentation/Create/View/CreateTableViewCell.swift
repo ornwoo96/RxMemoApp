@@ -7,9 +7,12 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class CreateTableViewCell: UITableViewCell {
     static let identifier = "CreateTableViewCell"
+    var viewModel = PublishSubject<CreateTableItemViewModel>()
+    var disposeBag = DisposeBag()
     
     var foodName: UILabel = {
         let label = UILabel()
@@ -27,6 +30,7 @@ class CreateTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        subscribe()
     }
     
     required init?(coder: NSCoder) {
@@ -48,4 +52,12 @@ class CreateTableViewCell: UITableViewCell {
         }
     }
     
+    func subscribe() {
+        self.viewModel
+            .subscribe(onNext: { entity in
+                self.foodName.text = entity.foodName
+                self.dangLabel.text = entity.dang
+            })
+            .disposed(by: disposeBag)
+    }
 }

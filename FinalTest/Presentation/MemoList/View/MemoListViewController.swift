@@ -93,7 +93,8 @@ extension MemoListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = memoTableView.dequeueReusableCell(withIdentifier: "MemoListTableViewCell", for: indexPath) as! MemoListTableViewCell
+        let cell = memoTableView.dequeueReusableCell(withIdentifier: "MemoListTableViewCell",
+                                                     for: indexPath) as! MemoListTableViewCell
         if let resultViewModel = viewModel?.resultViewModel.value[indexPath.row] {
             cell.viewModel.onNext(resultViewModel)
         }
