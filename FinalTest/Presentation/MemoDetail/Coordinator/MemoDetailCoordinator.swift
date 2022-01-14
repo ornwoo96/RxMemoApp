@@ -15,9 +15,12 @@ class MemoDetailCoordinator: Coordinator {
     var result: Result
     var navigationController: UINavigationController
     
-    init(result: Result, navigationController: UINavigationController) {
+    init(result: Result,
+         navigationController: UINavigationController,
+         viewController: ViewControllerProtocol) {
         self.navigationController = navigationController
         self.result = result
+        self.viewController = viewController
     }
     
     func start() {
@@ -25,8 +28,8 @@ class MemoDetailCoordinator: Coordinator {
         let viewController = memoDetailDIContainer.makeMemoDetailViewController(result: result)
         viewController.coordinator = self
         parentsCoordinator?.viewController = viewController
-        
         self.navigationController.pushViewController(viewController, animated: true)
+//        self.viewController = viewController
     }
     
     func childDidFinish() {
@@ -39,6 +42,15 @@ class MemoDetailCoordinator: Coordinator {
                 childCoordinators.remove(at: index)
                 break
             }
+        }
+    }
+    
+    func dismiss() {
+        if let viewController = self.viewController as? UIViewController {
+            self.viewController?.viewDismiss()
+            // MARK: 여기서 뷰컨은 createViewController인데 dismiss가 되넹?
+            // MARK: Flow를 타고 갈때 부모 자식 관계를 다 맺어줘야 쉽게 내가 원하는 coordinator에 뷰컨을 핸들링 할 수 있음...
+            viewController.dismiss(animated: true, completion: nil)
         }
     }
     

@@ -56,7 +56,7 @@ class CreateTableViewCell: UITableViewCell {
         self.viewModel
             .subscribe(onNext: { entity in
                 self.foodName.text = entity.foodName
-                self.dangLabel.text = entity.dang
+                self.dangLabel.text = "당: " + entity.dang
             })
             .disposed(by: disposeBag)
     }

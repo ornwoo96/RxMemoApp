@@ -40,16 +40,18 @@ class CreateCoordinator: Coordinator {
     
     // MARK: 이번 주에 와냐한테 물어보기
     func showMemoListViewController() {
-        guard let viewController = self.viewController as? UIViewController else { return }
+        guard let presentViewController = self.viewController as? UIViewController else { return }
+        guard let viewController = self.viewController else { return }
         
         let MemoListViewController = MemoListDIContainer().makeMemoListViewController()
         
         let navigation = UINavigationController(rootViewController: MemoListViewController)
         
-        let coordinator = MemoListCoordinator(navigationViewController: navigation)
+        let coordinator = MemoListCoordinator(navigationViewController: navigation,
+                                              viewController: viewController)
         
         MemoListViewController.coordinator = coordinator
         
-        viewController.present(navigation, animated: true)
+        presentViewController.present(navigation, animated: true)
     }
 }

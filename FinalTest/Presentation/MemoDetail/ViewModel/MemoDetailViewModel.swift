@@ -27,7 +27,6 @@ class MemoDetailViewModel: MemoDetailViewModelProtocol {
         self.memoUseCase = memoUseCase
         self.result = result
     }
-    
 }
 
 // MARK: Input - View Methods

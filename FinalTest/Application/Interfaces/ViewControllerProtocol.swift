@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ViewControllerProtocol: AnyObject {
-    
+    func viewDismiss()
 }

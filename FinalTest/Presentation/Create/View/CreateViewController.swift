@@ -86,7 +86,18 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
         )
     }
     
-    func bind() {}
+    func bind() {
+        viewModel?.entity
+            .subscribe({ data in
+                self.foodsTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func viewDismiss() {
+        
+        viewModel?.viewDidLoad()
+    }
 }
 
 extension CreateViewController {

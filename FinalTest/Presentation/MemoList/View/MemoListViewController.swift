@@ -73,6 +73,7 @@ class MemoListViewController: UIViewController, ViewControllerProtocol {
             .disposed(by: disposeBag)
         
     }
+    func viewDismiss() {}
 }
 
 extension MemoListViewController: UISearchBarDelegate {

@@ -17,7 +17,8 @@ protocol ResultUseCaseProtocol {
 }
 
 class ResultUseCase: ResultUseCaseProtocol {
-    var repository: FetchResearchRepository?
+    // MARK: 엥? internal???
+    internal var repository: FetchResearchRepository?
     var resultData: [Result] = []
     
     init(repository: FetchResearchRepository) {

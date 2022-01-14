@@ -14,8 +14,10 @@ class MemoListCoordinator: Coordinator {
     var viewController: ViewControllerProtocol?
     var presentingViewController: ViewControllerProtocol?
     
-    init(navigationViewController: UINavigationController) {
+    init(navigationViewController: UINavigationController,
+         viewController: ViewControllerProtocol) {
         self.navigationController = navigationViewController
+        self.viewController = viewController
     }
     
     // MARK: 똑같이 반복되는 코드들 함수로 빼고 싶다~
@@ -55,7 +57,10 @@ class MemoListCoordinator: Coordinator {
     }
     
     func showMemoDetailView(resultData: Result) {
-        let memoDetailCoordinator = MemoDetailCoordinator(result: resultData, navigationController: self.navigationController)
+        guard let viewController = self.viewController else { return }
+        let memoDetailCoordinator = MemoDetailCoordinator(result: resultData,
+                                                          navigationController: self.navigationController,
+                                                          viewController: viewController)
         memoDetailCoordinator.parentsCoordinator = self
         self.childCoordinators.append(memoDetailCoordinator)
         memoDetailCoordinator.start()

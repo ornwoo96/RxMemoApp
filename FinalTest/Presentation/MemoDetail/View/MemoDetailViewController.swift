@@ -138,6 +138,7 @@ class MemoDetailViewController: UIViewController, ViewControllerProtocol {
             .bind {
                 print("추가하기 클릭")
                 self.viewModel?.addButtonDidTap()
+                self.coordinator?.dismiss()
             }
             .disposed(by: disposeBag)
     }
@@ -201,6 +202,7 @@ class MemoDetailViewController: UIViewController, ViewControllerProtocol {
             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         }
     }
+    func viewDismiss() {}
 }
 
 extension MemoDetailViewController {
