@@ -10,7 +10,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class CreateViewController: UIViewController, ViewControllerProtocol {
+protocol MemoListParentable {
+    func parentActing()
+}
+
+class CreateViewController: UIViewController, MemoListParentable {
     private var viewModel: CreateViewModel?
     var coordinator: Coordinator?
     var disposeBag = DisposeBag()
@@ -43,9 +47,11 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
         coordinator?.childDidFinish(coordinator)
     }
     
-    static func create(with viewModel: CreateViewModel) -> CreateViewController{
+    static func create(with viewModel: CreateViewModel
+                       ,coordinator: Coordinator) -> CreateViewController{
         let view = CreateViewController()
         view.viewModel = viewModel
+        view.coordinator = coordinator
         return view
     }
     
@@ -93,9 +99,7 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
             })
             .disposed(by: disposeBag)
     }
-    
-    func viewDismiss() {
-        
+    func parentActing() {
         viewModel?.viewDidLoad()
     }
 }
@@ -103,13 +107,9 @@ class CreateViewController: UIViewController, ViewControllerProtocol {
 extension CreateViewController {
     @objc func createButtonDidTap(sender: UIBarButtonItem) {
         if let coordinator = coordinator as? CreateCoordinator {
-            coordinator.showMemoListViewController()
+            coordinator.presentMemoListViewController()
         }
     }
-}
-
-extension CreateViewController: UITableViewDelegate {
-    
 }
 
 extension CreateViewController: UITableViewDataSource {
@@ -121,9 +121,13 @@ extension CreateViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CreateTableViewCell",
                                                  for: indexPath) as! CreateTableViewCell
         if let entity = viewModel?.entity.value[indexPath.row] {
-            cell.viewModel.onNext(entity)
+            cell.bind(viewModel: entity)
         }
         
         return cell
     }
+}
+
+extension CreateViewController: UITableViewDelegate {
+    
 }

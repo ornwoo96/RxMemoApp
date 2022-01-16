@@ -15,8 +15,7 @@ class MemoListTableViewCell: UITableViewCell {
     
     let disposeBag = DisposeBag()
     
-    // MARK: 여기서 쓰이는게 아닐듯?
-    var viewModel = PublishSubject<ResultViewModel>()
+    var viewModel: MemoListItemViewModel?
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -41,20 +40,10 @@ class MemoListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
-        subscribe()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func subscribe() {
-        self.viewModel
-            .subscribe(onNext: { resultViewModel in
-                self.titleLabel.text = resultViewModel.foodName
-                self.contentLabel.text = "당: \(resultViewModel.sugar ?? "")"
-            })
-            .disposed(by: disposeBag)
     }
     
     func configureUI() {
@@ -70,5 +59,19 @@ class MemoListTableViewCell: UITableViewCell {
             $0.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor).isActive = true
             $0.leadingAnchor.constraint(equalTo: self.titleLabel.trailingAnchor, constant: 10).isActive = true
         }
+    }
+    
+    func subscribe() {
+        viewModel?.items
+            .subscribe(onNext: { resultViewModel in
+                self.titleLabel.text = resultViewModel.foodName
+                self.contentLabel.text = "당: " + resultViewModel.sugar
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func bind(viewModel: MemoListItemViewModel) {
+        self.viewModel = viewModel
+        subscribe()
     }
 }

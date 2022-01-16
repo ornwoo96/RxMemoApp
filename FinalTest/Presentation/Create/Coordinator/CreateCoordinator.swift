@@ -12,7 +12,7 @@ class CreateCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var viewController: ViewControllerProtocol?
+    var viewController: MemoListParentable?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -20,10 +20,7 @@ class CreateCoordinator: Coordinator {
     
     func start() {
         let diContainer = CreateDIContainer()
-        let viewController = diContainer.makeCreateViewController()
-        viewController.coordinator = self
-        parentsCoordinator?.viewController = viewController
-        parentsCoordinator?.childCoordinators.append(self)
+        let viewController = diContainer.makeCreateViewController(coordinator: self)
         self.navigationController.pushViewController(viewController, animated: false)
         self.viewController = viewController
     }
@@ -37,21 +34,10 @@ class CreateCoordinator: Coordinator {
         }
     }
     
-    
-    // MARK: 이번 주에 와냐한테 물어보기
-    func showMemoListViewController() {
-        guard let presentViewController = self.viewController as? UIViewController else { return }
-        guard let viewController = self.viewController else { return }
-        
-        let MemoListViewController = MemoListDIContainer().makeMemoListViewController()
-        
-        let navigation = UINavigationController(rootViewController: MemoListViewController)
-        
-        let coordinator = MemoListCoordinator(navigationViewController: navigation,
-                                              viewController: viewController)
-        
-        MemoListViewController.coordinator = coordinator
-        
-        presentViewController.present(navigation, animated: true)
+    func presentMemoListViewController() {
+        guard let parentViewController = viewController as? UIViewController & MemoListParentable else { return }
+        let coordinator = MemoListCoordinator(viewController: parentViewController)
+        let presentView = coordinator.memoListDIContainer.presentMemoListViewController(coordinator: coordinator)
+        parentViewController.present(presentView, animated: true)
     }
 }

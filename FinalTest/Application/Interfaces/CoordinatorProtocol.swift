@@ -10,10 +10,7 @@ import Foundation
 protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get set }
     var parentsCoordinator: Coordinator? { get set }
-    var viewController: ViewControllerProtocol? { get set }
     
-    func start()
+    func start() // MARK: 무조건 PushView할때만
     func childDidFinish(_ child: Coordinator?)
-    // func presentStart()
-    // func pushStart()
 }

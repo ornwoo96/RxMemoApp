@@ -11,7 +11,7 @@ import RxSwift
 
 class CreateTableViewCell: UITableViewCell {
     static let identifier = "CreateTableViewCell"
-    var viewModel = PublishSubject<CreateTableItemViewModel>()
+    var viewModel: CreateTableItemViewModel?
     var disposeBag = DisposeBag()
     
     var foodName: UILabel = {
@@ -53,11 +53,16 @@ class CreateTableViewCell: UITableViewCell {
     }
     
     func subscribe() {
-        self.viewModel
+        viewModel?.entityItem
             .subscribe(onNext: { entity in
                 self.foodName.text = entity.foodName
-                self.dangLabel.text = "당: " + entity.dang
+                self.dangLabel.text = "당: " + entity.dang!
             })
             .disposed(by: disposeBag)
+    }
+    
+    func bind(viewModel: CreateTableItemViewModel) {
+        self.viewModel = viewModel
+        subscribe()
     }
 }

@@ -38,22 +38,10 @@ extension CreateViewModel {
     
     func viewDidLoad() {
         useCase.execute()
-        // MARK: 여기서 맵 사용 viewModel 타입으로 데이터 핸들링 이렇게 하는게 맞나? 어쩃든 잘됨...;;;
-            .subscribe(onNext: { [weak self] str in
-                self?.entityCount = str.count
-                self?.entity.accept(self?.convertEntityData(entity: str) ?? [])
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func convertEntityData(entity: [Entity]) -> [CreateTableItemViewModel] {
-        var entityArray: [CreateTableItemViewModel] = []
-        
-        for i in entity {
-            let a = CreateTableItemViewModel(entity: i)
-            entityArray.append(a)
-        }
-        
-        return entityArray
+            .map { $0.map { CreateTableItemViewModel(entity: $0) } }
+            .subscribe(onNext: { [weak self] entityData in
+                self?.entityCount = entityData.count
+                self?.entity.accept(entityData)
+            }).disposed(by: disposeBag)
     }
 }

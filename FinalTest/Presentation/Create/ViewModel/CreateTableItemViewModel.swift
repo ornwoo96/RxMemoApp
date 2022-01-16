@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
-struct CreateTableItemViewModel {
-    let foodName: String
-    let dang: String
+class CreateTableItemViewModel {
+    var entityItem = BehaviorRelay<Entity>(value: .init())
     
     init(entity: Entity) {
-        self.foodName = entity.foodName ?? ""
-        self.dang = entity.dang ?? ""
+        self.entityItem.accept(entity)
     }
 }

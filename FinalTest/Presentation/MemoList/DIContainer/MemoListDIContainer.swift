@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import UIKit
 
 class MemoListDIContainer {
+    func presentMemoListViewController(coordinator: Coordinator) -> UINavigationController {
+        let navigationView = UINavigationController(rootViewController: makeMemoListViewController(coordinator: coordinator))
+        return navigationView
+    }
     
-    func makeMemoListViewController() -> MemoListViewController {
-        return MemoListViewController.create(with: makeMemoListViewModel() as! MemoListViewModel)
+    func makeMemoListViewController(coordinator: Coordinator) -> MemoListViewController {
+        return MemoListViewController.create(with: makeMemoListViewModel() as! MemoListViewModel,
+                                             coordinator: coordinator)
     }
     
     func makeMemoListViewModel() -> MemoListViewModelProtocol {

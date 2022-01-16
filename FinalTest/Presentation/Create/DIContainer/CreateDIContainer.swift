@@ -9,8 +9,9 @@ import Foundation
 
 class CreateDIContainer {
     
-    func makeCreateViewController() -> CreateViewController {
-        return CreateViewController.create(with: makeCreateViewModel() as! CreateViewModel)
+    func makeCreateViewController(coordinator: Coordinator) -> CreateViewController {
+        return CreateViewController.create(with: makeCreateViewModel() as! CreateViewModel,
+                                           coordinator: coordinator)
     }
     
     func makeCreateViewModel() -> CreateViewModelProtocol {

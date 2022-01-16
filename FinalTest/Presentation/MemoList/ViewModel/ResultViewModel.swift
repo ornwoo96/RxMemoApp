@@ -6,19 +6,29 @@
 //
 
 import Foundation
+import RxRelay
 
 struct ResultViewModel {
-    private let result: Result
+    static let empty: Self = .init(result: .empty)
     
-    var foodName: String? {
-        return result.descKor
-    }
-    
-    var sugar: String? {
-        return result.nutrCont5
-    }
+    var foodName: String = ""
+    var sugar: String = ""
     
     init(result: Result) {
-        self.result = result
+        guard let foodName = result.descKor,
+              let sugar = result.nutrCont5 else {
+                  return
+              }
+        
+        self.foodName = foodName
+        self.sugar = sugar
+    }
+}
+
+class MemoListItemViewModel {
+    var items = BehaviorRelay<ResultViewModel>(value: .empty)
+    
+    init(items: ResultViewModel) {
+        self.items.accept(items)
     }
 }

@@ -11,7 +11,7 @@ import RxCocoa
 import Then
 
 class MemoListViewController: UIViewController, ViewControllerProtocol {
-    var coordinator: MemoListCoordinator?
+    var coordinator: Coordinator?
     var viewModel: MemoListViewModel?
     var disposeBag = DisposeBag()
     var memoTableView = UITableView()
@@ -22,9 +22,11 @@ class MemoListViewController: UIViewController, ViewControllerProtocol {
         return searchBar
     }()
     
-    static func create(with viewModel: MemoListViewModel) -> MemoListViewController {
+    static func create(with viewModel: MemoListViewModel,
+                       coordinator: Coordinator) -> MemoListViewController {
         let view = MemoListViewController()
         view.viewModel = viewModel
+        view.coordinator = coordinator
         return view
     }
     
@@ -78,6 +80,7 @@ class MemoListViewController: UIViewController, ViewControllerProtocol {
 
 extension MemoListViewController: UISearchBarDelegate {
     @objc func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         viewModel?.fetchResult(query: "\(searchBar.text ?? "")")
     }
 }
@@ -97,14 +100,16 @@ extension MemoListViewController: UITableViewDataSource {
         let cell = memoTableView.dequeueReusableCell(withIdentifier: "MemoListTableViewCell",
                                                      for: indexPath) as! MemoListTableViewCell
         if let resultViewModel = viewModel?.resultViewModel.value[indexPath.row] {
-            cell.viewModel.onNext(resultViewModel)
+            let viewModel = MemoListItemViewModel(items: resultViewModel)
+            cell.bind(viewModel: viewModel)
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedResult = viewModel?.result[indexPath.row] {
-            coordinator?.showMemoDetailView(resultData: selectedResult)
+            guard let coordinator = self.coordinator as? MemoListCoordinator else { return }
+            coordinator.showMemoDetailView(resultData: selectedResult)
         }
     }
 }

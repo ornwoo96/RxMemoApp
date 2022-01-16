@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: RepositoryProtocol을 만들어서 대 통합 해야함!
 protocol FetchResearchRepositoryProtocol {
     var resultData: [Result] { get set }
     

@@ -26,6 +26,27 @@ struct ResultResponse: Codable {
 }
 
 struct Result: Codable {
+    static let empty: Self = .init(num: "",
+                                   foodCd: "",
+                                   samplingRegionName: "",
+                                   samplingMonthName: "",
+                                   samplingRegionCD: "",
+                                   samplingMonthCD: "",
+                                   groupName: "",
+                                   descKor: "",
+                                   researchYear: "",
+                                   makerName: "",
+                                   subRefName: "",
+                                   servingSize: "",
+                                   nutrCont1: "",
+                                   nutrCont2: "",
+                                   nutrCont3: "",
+                                   nutrCont4: "",
+                                   nutrCont5: "",
+                                   nutrCont6: "",
+                                   nutrCont7: "",
+                                   nutrCont8: "",
+                                   nutrCont9: "")
     var num: String? // 번호
     var foodCd: String? // 식품 코드
     var samplingRegionName: String?
