@@ -13,7 +13,6 @@ class CreateTableViewCell: UITableViewCell {
     static let identifier = "CreateTableViewCell"
     var viewModel: CreateTableItemViewModel?
     var disposeBag = DisposeBag()
-    
     var foodName: UILabel = {
         let label = UILabel()
         label.textColor = .black

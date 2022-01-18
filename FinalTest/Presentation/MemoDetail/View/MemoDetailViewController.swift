@@ -10,9 +10,9 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MemoDetailViewController: UIViewController, ViewControllerProtocol {
+class MemoDetailViewController: UIViewController {
     var viewModel: MemoDetailViewModel?
-    weak var coordinator: MemoDetailCoordinator?
+    weak var coordinator: MemoDetailCoordinatorProtocol?
     let disposeBag = DisposeBag()
     
     lazy var foodNameLabel: UILabel = {
@@ -105,12 +105,14 @@ class MemoDetailViewController: UIViewController, ViewControllerProtocol {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        coordinator?.childDidFinish()
+        // MARK: 코디네이터 삭제 함수 추가
     }
     
-    static func create(with viewModel: MemoDetailViewModel) -> MemoDetailViewController {
+    static func create(with viewModel: MemoDetailViewModel,
+                       coordinator: MemoDetailCoordinatorProtocol) -> MemoDetailViewController {
         let view = MemoDetailViewController()
         view.viewModel = viewModel
+        view.coordinator = coordinator
         return view
     }
     
@@ -201,13 +203,6 @@ class MemoDetailViewController: UIViewController, ViewControllerProtocol {
             $0.heightAnchor.constraint(equalToConstant: 40).isActive = true
             $0.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         }
-    }
-    func viewDismiss() {}
-}
-
-extension MemoDetailViewController {
-    @objc func removeButtonDidTap(sender: UIButton) {
-        coordinator?.removeAllCoordinator()
     }
 }
 

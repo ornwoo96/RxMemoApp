@@ -11,8 +11,6 @@ class MainCoordinator: Coordinator {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    var viewController: ViewControllerProtocol?
-    
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -25,8 +23,7 @@ class MainCoordinator: Coordinator {
         createCoordinator.start()
     }
     
-    // MARK: 이건 삭제~
-    func childDidFinish(_ child: Coordinator?){
+    func childDidFinish(_ child: Coordinator?) {
         for (index, coordinator) in childCoordinators.enumerated() {
             if coordinator === child {
                 childCoordinators.remove(at: index)
@@ -34,5 +31,5 @@ class MainCoordinator: Coordinator {
             }
         }
     }
-    // MARK: 코디네이터 패턴 - 
 }
+

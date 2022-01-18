@@ -7,12 +7,15 @@
 
 import UIKit
 
-class MemoListCoordinator: Coordinator {
+protocol MemoListCoordinatorProtocol: Coordinator {
+    func showMemoDetailView(resultData: Result)
+}
+
+class MemoListCoordinator: MemoListCoordinatorProtocol {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController = UINavigationController()
     var viewController: MemoListParentable? // MARK: ParentView에 func을 사용하기 위해
-    var presentingViewController: ViewControllerProtocol?
     let memoListDIContainer = MemoListDIContainer()
     
     init(viewController: MemoListParentable) {

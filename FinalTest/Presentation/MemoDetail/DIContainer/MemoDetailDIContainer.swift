@@ -9,8 +9,10 @@ import Foundation
 
 class MemoDetailDIContainer {
     
-    func makeMemoDetailViewController(result: Result) -> MemoDetailViewController {
-        return MemoDetailViewController.create(with: makeMemoDetailViewModel(result: result))
+    func makeMemoDetailViewController(coordinator: MemoDetailCoordinatorProtocol,
+                                      result: Result) -> MemoDetailViewController {
+        return MemoDetailViewController.create(with: makeMemoDetailViewModel(result: result),
+                                               coordinator: coordinator)
     }
     
     func makeMemoDetailViewModel(result: Result) -> MemoDetailViewModel {

@@ -8,10 +8,15 @@
 import Foundation
 import UIKit
 
-class CreateCoordinator: Coordinator {
+protocol CreateCoordinatorProtocol: Coordinator {
+    func presentMemoListViewController()
+}
+
+class CreateCoordinator: CreateCoordinatorProtocol {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    var createDIContainer = CreateDIContainer()
     var viewController: MemoListParentable?
     
     init(navigationController: UINavigationController) {
@@ -19,8 +24,7 @@ class CreateCoordinator: Coordinator {
     }
     
     func start() {
-        let diContainer = CreateDIContainer()
-        let viewController = diContainer.makeCreateViewController(coordinator: self)
+        let viewController = createDIContainer.makeCreateViewController(coordinator: self)
         self.navigationController.pushViewController(viewController, animated: false)
         self.viewController = viewController
     }

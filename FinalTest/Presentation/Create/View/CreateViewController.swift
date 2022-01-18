@@ -16,9 +16,8 @@ protocol MemoListParentable {
 
 class CreateViewController: UIViewController, MemoListParentable {
     private var viewModel: CreateViewModel?
-    var coordinator: Coordinator?
+    weak var coordinator: Coordinator?
     var disposeBag = DisposeBag()
-    
     var dangLabel: UILabel = {
         let label = UILabel()
         label.do {

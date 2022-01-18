@@ -16,9 +16,7 @@ struct ResultViewModel {
     
     init(result: Result) {
         guard let foodName = result.descKor,
-              let sugar = result.nutrCont5 else {
-                  return
-              }
+              let sugar = result.nutrCont5 else { return }
         
         self.foodName = foodName
         self.sugar = sugar

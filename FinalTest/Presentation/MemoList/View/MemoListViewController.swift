@@ -10,8 +10,12 @@ import RxSwift
 import RxCocoa
 import Then
 
-class MemoListViewController: UIViewController, ViewControllerProtocol {
-    var coordinator: Coordinator?
+protocol MemoListViewControllerProtocol: AnyObject {
+    
+}
+
+class MemoListViewController: UIViewController, MemoListViewControllerProtocol {
+    var coordinator: MemoListCoordinatorProtocol?
     var viewModel: MemoListViewModel?
     var disposeBag = DisposeBag()
     var memoTableView = UITableView()
@@ -23,10 +27,10 @@ class MemoListViewController: UIViewController, ViewControllerProtocol {
     }()
     
     static func create(with viewModel: MemoListViewModel,
-                       coordinator: Coordinator) -> MemoListViewController {
+                       coordinator: MemoListCoordinatorProtocol) -> MemoListViewController {
         let view = MemoListViewController()
-        view.viewModel = viewModel
         view.coordinator = coordinator
+        view.viewModel = viewModel
         return view
     }
     
@@ -75,7 +79,6 @@ class MemoListViewController: UIViewController, ViewControllerProtocol {
             .disposed(by: disposeBag)
         
     }
-    func viewDismiss() {}
 }
 
 extension MemoListViewController: UISearchBarDelegate {
@@ -108,8 +111,9 @@ extension MemoListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let selectedResult = viewModel?.result[indexPath.row] {
-            guard let coordinator = self.coordinator as? MemoListCoordinator else { return }
-            coordinator.showMemoDetailView(resultData: selectedResult)
+            
+//            guard let coordinator = self.coordinator as? MemoListCoordinator else { return }
+            coordinator?.showMemoDetailView(resultData: selectedResult)
         }
     }
 }

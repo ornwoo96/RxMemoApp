@@ -8,9 +8,14 @@
 import Foundation
 import UIKit
 
-class MemoDetailCoordinator: Coordinator {
+protocol MemoDetailCoordinatorProtocol: Coordinator {
+    func dismiss()
+}
+
+class MemoDetailCoordinator: MemoDetailCoordinatorProtocol {
     weak var parentsCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
+    var memoDetailDIContainer = MemoDetailDIContainer()
     var viewController: MemoListParentable?
     var result: Result
     var navigationController: UINavigationController
@@ -24,8 +29,8 @@ class MemoDetailCoordinator: Coordinator {
     }
     
     func start() {
-        let memoDetailDIContainer = MemoDetailDIContainer()
-        let viewController = memoDetailDIContainer.makeMemoDetailViewController(result: result)
+        let viewController = memoDetailDIContainer.makeMemoDetailViewController(coordinator: self,
+                                                                                result: result)
         viewController.coordinator = self
         self.navigationController.pushViewController(viewController, animated: true)
     }
@@ -49,13 +54,5 @@ class MemoDetailCoordinator: Coordinator {
             // MARK: 여기서 뷰컨은 createViewController인데 dismiss가 되넹?
             viewController.dismiss(animated: true, completion: nil)
         }
-    }
-    
-    // MARK: 차차 고칠 예정
-    func removeAllCoordinator() {
-//        let rootCoordinator = parentsCoordinator?.parentsCoordinator
-//        let memoListCoordinator = parentsCoordinator
-//        parentsCoordinator?.parentsCoordinator?.childDidFinish(parentsCoordinator)
-//        rootCoordinator?.viewControllerr
     }
 }
